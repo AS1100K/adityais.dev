@@ -1,0 +1,37 @@
+---
+interface Props {
+  title: String;
+  description?: String;
+}
+
+const page_description = Astro.props;
+
+const default_description =
+  "I'm a software developer with a passion for creating innovative solutions that simplify complex tasks. My work spans various domains, all entered around enhancing productivity and empowering others through building software that automates workflows, decisions, and everyday tasks.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{page_description.title}</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+  </head>
+  <body>
+    <header>
+      <!-- Header goes here -->
+    </header>
+    <main>
+      <p>
+        {
+          page_description.description
+            ? page_description.description
+            : default_description
+        }
+      </p>
+      <slot />
+    </main>
+    <footer>
+      <!-- Footer goes here -->
+    </footer>
+  </body>
+</html>
