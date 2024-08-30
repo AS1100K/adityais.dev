@@ -14,6 +14,12 @@ const default_description =
 <html lang="en">
   <head>
     <title>{page_description.title}</title>
+    <meta
+      name="description"
+      content={page_description.description
+        ? page_description.description
+        : default_description}
+    />
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
   </head>
   <body>
@@ -21,13 +27,6 @@ const default_description =
       <!-- Header goes here -->
     </header>
     <main>
-      <p>
-        {
-          page_description.description
-            ? page_description.description
-            : default_description
-        }
-      </p>
       <slot />
     </main>
     <footer>
