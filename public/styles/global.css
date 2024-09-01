@@ -76,3 +76,9 @@ a:hover {
 .clickable {
   cursor: pointer;
 }
+
+@media only screen and (max-width: 700px) {
+  .heading-text {
+    font-size: 32px;
+  }
+}

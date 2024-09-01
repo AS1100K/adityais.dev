@@ -8,7 +8,12 @@ import portrait from "../assets/portrait.jpg";
   <div class="hero" id="home">
     <div class="hero-content">
       <p>Hi, my name is</p>
-      <h1 class="heading-text primary-text poppins-black">Aditya Kumar.</h1>
+      <h1
+        class="heading-text primary-text poppins-black"
+        style="line-height: 100%;"
+      >
+        Aditya Kumar.
+      </h1>
       <h1
         class="heading-text secondary-text poppins-extrabold"
         style="line-height: 100%;"
@@ -40,16 +45,16 @@ import portrait from "../assets/portrait.jpg";
     display: none;
   }
 
-  @media only screen and (min-width: 730px) {
-    .hero {
-      display: flex;
-      flex-direction: row;
-      justify-content: right;
-      align-items: center;
-      gap: 50px;
-      position: relative;
-    }
+  .hero {
+    height: 90vh;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 50px;
+    position: relative;
+  }
 
+  @media only screen and (min-width: 730px) {
     .img-wrapper > img {
       display: unset;
       width: auto;
