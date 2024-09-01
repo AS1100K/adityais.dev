@@ -6,6 +6,10 @@
   --text: #09100a;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   padding: 0;
