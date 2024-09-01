@@ -1,0 +1,76 @@
+:root {
+  --primary: #56ba63;
+  --secondary: #9cdda4;
+  --accent: #6fd67d;
+  --background: #f9fcf9;
+  --text: #09100a;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  margin: 0 5vw;
+  background-color: var(--background);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 150%;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li {
+  color: var(--text);
+}
+
+.heading-text {
+  font-size: 48px;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 150ms ease-in;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+.hidden {
+  display: none;
+}
+
+#astronav-menu {
+  background: none;
+  border: 0;
+}
+
+.primary-text {
+  color: var(--accent);
+}
+
+.secondary-text {
+  color: var(--secondary);
+}
+
+.clickable {
+  cursor: pointer;
+}
