@@ -1,7 +1,81 @@
 ---
+import { Image } from "astro:assets";
 import Main from "../layouts/main.astro";
+import portrait from "../assets/portrait.jpg";
 ---
 
 <Main title="Aditya Kumar">
-  <h1>Hello</h1>
+  <div class="hero" id="home">
+    <div class="hero-content">
+      <p>Hi, my name is</p>
+      <h1 class="heading-text primary-text poppins-black">Aditya Kumar.</h1>
+      <h1
+        class="heading-text secondary-text poppins-extrabold"
+        style="line-height: 100%;"
+      >
+        I love automating every thing.
+      </h1>
+      <p>
+        I'm a software developer with a passion for creating innovative
+        solutions that simplify complex tasks. My work spans various domains,
+        all entered around enhancing productivity and empowering others through
+        building software that automates workflows, decisions, and everyday
+        tasks.
+      </p>
+    </div>
+    <div class="img-wrapper">
+      <Image
+        src={portrait}
+        alt="Self Portrait"
+        widths={[430, 510, 1200]}
+        sizes={"(max-width: 886px) 430px, (max-width: 1280px) 510px, 1200px"}
+        quality="high"
+      />
+    </div>
+  </div>
 </Main>
+
+<style>
+  .img-wrapper > img {
+    display: none;
+  }
+
+  @media only screen and (min-width: 730px) {
+    .hero {
+      display: flex;
+      flex-direction: row;
+      justify-content: right;
+      align-items: center;
+      gap: 50px;
+      position: relative;
+    }
+
+    .img-wrapper > img {
+      display: unset;
+      width: auto;
+      height: 90vh;
+      border-radius: 22px;
+    }
+
+    .hero-content {
+      width: 90vw;
+      max-width: 645px;
+      position: absolute;
+      z-index: 5;
+      left: 0;
+    }
+
+    .hero-content > p:last-child {
+      background-color: var(--background);
+      padding: 10px 10px 10px 0;
+      border-radius: 11px;
+    }
+  }
+
+  @media only screen and (max-width: 886px) {
+    .img-wrapper > img {
+      width: 50vw;
+      height: auto;
+    }
+  }
+</style>
