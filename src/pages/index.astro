@@ -66,6 +66,41 @@ import portrait from "../assets/portrait.jpg";
       />
     </div>
   </div>
+  <div class="skills soft-container">
+    <h1 id="skills" class="primary-text poppins-bold">Skills</h1>
+    <div>
+      <ul>
+        <li><b>Languages</b></li>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+        <li>TypeScript</li>
+        <li>Python</li>
+        <li>Rust</li>
+      </ul>
+      <ul>
+        <li><b>Frameworks</b></li>
+        <li>React.js</li>
+        <li>Next.js</li>
+        <li>Node.js</li>
+        <li>Django</li>
+        <li>Flask</li>
+        <li>Tokio</li>
+        <li>Bevy</li>
+      </ul>
+      <ul>
+        <li><b>Tools &amp; Technologies</b></li>
+        <li>Chrome Dev Tools</li>
+        <li>Postman</li>
+        <li>Git</li>
+        <li>GitHub Actions</li>
+        <li>Docker</li>
+        <li>Web Assembly</li>
+        <li>AWS</li>
+        <li>Oracle Cloud</li>
+      </ul>
+    </div>
+  </div>
 </Main>
 
 <style>
@@ -96,6 +131,19 @@ import portrait from "../assets/portrait.jpg";
     justify-content: center;
     min-height: 90vh;
     height: fit-content;
+  }
+
+  .skills > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
 
   @media only screen and (min-width: 500px) {
