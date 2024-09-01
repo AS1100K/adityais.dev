@@ -2,37 +2,40 @@
 import Button from "./Button.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 ---
+
 <header>
-    <Astronav closeOnClick>
-      <div class="navbar">
-        <a href="/"><img src="/favicon.svg" alt="Home" width="40" height="40" /></a>
-        <div class="menu-btn-wrapper">
-            <MenuIcon class="menu-btn" />
-        </div>
+  <Astronav closeOnClick>
+    <div class="navbar">
+      <a href="/"
+        ><img src="/favicon.svg" alt="Home" width="40" height="40" /></a
+      >
+      <div class="menu-btn-wrapper">
+        <MenuIcon class="menu-btn" />
       </div>
-      <MenuItems class="hidden menu-items">
-        <ul>
-          <li>
-            <a href="#home">Home</a>
-          </li>
-          <li>
-            <a href="#about">About</a>
-          </li>
-          <li>
-            <a href="#skills">Skills</a>
-          </li>
-          <li>
-            <a href="#projects">Projects</a>
-          </li>
-          <li>
-            <a href="/contact">Contact</a>
-          </li>
-          <li>
-            <Button>Resume</Button>
-          </li>
-        </ul>
-      </MenuItems>
-    </Astronav>
+    </div>
+    <MenuItems class="hidden menu-items">
+      <ul>
+        <li>
+          <a href="#home">Home</a>
+        </li>
+        <li>
+          <a href="#about">About</a>
+        </li>
+        <li>
+          <a href="#skills">Skills</a>
+        </li>
+        <li>
+          <a href="#projects">Projects</a>
+        </li>
+        <li>
+          <a href="/contact">Contact</a>
+        </li>
+        <li>
+          <Button>Resume</Button>
+        </li>
+      </ul>
+    </MenuItems>
+  </Astronav>
 </header>
 
 <style>
@@ -52,29 +55,28 @@ import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 
   .menu-btn {
     border: 0;
-    margin: 0,
+    margin: 0;
     padding: 5px;
     background: none;
   }
 
   @media only screen and (min-width: 600px) {
     ul {
-        flex-direction: row;
+      flex-direction: row;
     }
 
     .menu-btn-wrapper {
-        display: none;
+      display: none;
     }
 
     .menu-items {
-        display: flex;
+      display: flex;
     }
 
     header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 </style>
-
