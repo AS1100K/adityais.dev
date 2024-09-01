@@ -77,6 +77,10 @@ a:hover {
   cursor: pointer;
 }
 
+.container {
+  height: 90vh;
+}
+
 @media only screen and (max-width: 700px) {
   .heading-text {
     font-size: 32px;

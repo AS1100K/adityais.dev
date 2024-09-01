@@ -5,7 +5,7 @@ import portrait from "../assets/portrait.jpg";
 ---
 
 <Main title="Aditya Kumar">
-  <div class="hero" id="home">
+  <div class="hero container" id="home">
     <div class="hero-content">
       <p>Hi, my name is</p>
       <h1
@@ -28,7 +28,35 @@ import portrait from "../assets/portrait.jpg";
         tasks.
       </p>
     </div>
-    <div class="img-wrapper">
+    <div class="img-wrapper-hero">
+      <Image
+        src={portrait}
+        alt="Self Portrait"
+        widths={[430, 510, 1200]}
+        sizes={"(max-width: 886px) 430px, (max-width: 1280px) 510px, 1200px"}
+        quality="high"
+      />
+    </div>
+  </div>
+  <div class="about" id="about">
+    <div class="hero-content">
+      <h1 class="primary-text poppins-bold">About Me</h1>
+      <p>Hello, my name is Aditya, and I enjoy automating stuff.</p>
+      <p>
+        My journey into programming began back in 2020 when I was in 9th grade.
+        What started as a curiosity quickly turned into a passion as I dived
+        into Web Development and gradually expanded my knowledge across various
+        programming languages.
+      </p>
+      <p>
+        Fast forward to today, I've found a deep appreciation for Rust, a
+        language that impresses me with its design principles, addressing many
+        of the pitfalls found in other systems languages. My current focus is on
+        honing my skills and giving back to the community that has helped me
+        grow as a developer.
+      </p>
+    </div>
+    <div class="img-wrapper-about">
       <Image
         src={portrait}
         alt="Self Portrait"
@@ -41,12 +69,18 @@ import portrait from "../assets/portrait.jpg";
 </Main>
 
 <style>
-  .img-wrapper > img {
+  .img-wrapper-hero > img {
     display: none;
   }
 
+  .img-wrapper-about > img {
+    display: unset;
+    width: 90vw;
+    height: auto;
+    border-radius: 22px;
+  }
+
   .hero {
-    height: 90vh;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -54,8 +88,24 @@ import portrait from "../assets/portrait.jpg";
     position: relative;
   }
 
+  .about {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 90vh;
+    height: fit-content;
+  }
+
+  @media only screen and (min-width: 500px) {
+    .img-wrapper-about > img {
+      display: none;
+    }
+  }
+
   @media only screen and (min-width: 730px) {
-    .img-wrapper > img {
+    .img-wrapper-hero > img {
       display: unset;
       width: auto;
       height: 90vh;
@@ -78,7 +128,7 @@ import portrait from "../assets/portrait.jpg";
   }
 
   @media only screen and (max-width: 886px) {
-    .img-wrapper > img {
+    .img-wrapper-hero > img {
       width: 50vw;
       height: auto;
     }
