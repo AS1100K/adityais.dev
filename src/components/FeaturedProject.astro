@@ -26,17 +26,19 @@ if (!images[props.featured_image])
     <Image
       class="featured-image"
       src={props.featured_image
-        ? import(props.featured_image)
-        : import("../assets/portrait.jpg")}
-      widths={[350, 700, 1000]}
-      sizes={"(max-width: 400px) 350px, (max-width: 730px) 700px, (min-width: 731px) 350px, (min-width: 1200px) 1000px"}
+        ? images[props.featured_image]()
+        : images["../assets/portrait.jpg"]()}
+      widths={[350, 700]}
+      sizes={"(max-width: 400px) 350px, (min-width: 351px) 700px"}
       height={350}
       alt={props.title}
     />
   </div>
-  <div>
-    <h2 class="primary-text poppins-bold">{props.title}</h2>
-    {props.description.map((desc) => <p>{desc}</p>)}
+  <div class="featured-project-context">
+    <div>
+      <h2 class="primary-text poppins-bold">{props.title}</h2>
+      {props.description.map((desc) => <p>{desc}</p>)}
+    </div>
     <div class="information">
       {
         props.read_more_url ? (
@@ -80,6 +82,7 @@ if (!images[props.featured_image])
     </div>
   </div>
 </div>
+<br />
 
 <style>
   .featured-project {
@@ -88,13 +91,22 @@ if (!images[props.featured_image])
     align-items: flex-start;
     flex-direction: column;
     gap: 24px;
+    position: relative;
   }
 
   .featured-image {
     border-radius: 22px;
-    object-fit: fill;
+    object-fit: cover;
     object-position: center;
     width: 90vw;
+    max-width: 710px;
+    max-height: 350px;
+  }
+
+  .featured-project-context {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
   }
 
   h2 {
@@ -114,18 +126,17 @@ if (!images[props.featured_image])
     .featured-image {
       width: calc(45vw - 50px);
     }
+
+    .featured-project-context {
+      height: 350px;
+    }
+
     .alignment-left {
       flex-direction: row;
     }
 
     .alignment-right {
       flex-direction: row-reverse;
-    }
-  }
-
-  @media only screen and (min-width: 1500px) {
-    .featured-image {
-        width: 710px;
     }
   }
 </style>
