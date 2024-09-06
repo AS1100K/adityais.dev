@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Main from "../layouts/main.astro";
+import FeaturedProject from "../components/FeaturedProject.astro";
 import portrait from "../assets/portrait.jpg";
 ---
 
@@ -100,6 +101,26 @@ import portrait from "../assets/portrait.jpg";
         <li>Oracle Cloud</li>
       </ul>
     </div>
+  </div>
+  <div class="soft-container">
+    <h1 id="projects" class="primary-text poppins-bold">Featured Projects</h1>
+    <FeaturedProject
+      title="Aether"
+      alignment="left"
+      description={[
+        "A collection of high-performance Minecraft bots built in Rust to automate\
+         resource collection and other tedious tasks.",
+        "These bots are designed to significantly reduce human effort, allowing \
+         players to focus on enjoying the game and spending time with friends, rather\
+         than grinding for resources. By leveraging Rust, these bots achieve \
+         exceptional performance and minimal memory usage, making them both powerful\
+         and efficient.",
+      ]}
+      featured_image="../assets/featured-projects/aether.jpg"
+      github_url="https://github.com/as1100k/aether"
+    />
+    <!-- read_more_url="/sample-blog-post"
+      external_url="https://spacebots.org" -->
   </div>
 </Main>
 
