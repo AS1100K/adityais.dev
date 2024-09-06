@@ -7,11 +7,18 @@ interface Props {
   github_url?: string;
   external_url?: string;
   read_more_url?: string;
-  featured_image?: string;
+  featured_image: string;
   alignment: "left" | "right";
 }
 
 const props = Astro.props;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/featured-projects/*.{jpeg,jpg,png,gif}",
+);
+if (!images[props.featured_image])
+  throw new Error(
+    `"${props.featured_image}" does not exist in glob: "src/assets/featured-projects/*.{jpeg,jpg,png,gif}"`,
+  );
 ---
 
 <div class={`alignment-${props.alignment} featured-project`}>
