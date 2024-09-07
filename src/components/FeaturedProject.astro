@@ -8,7 +8,7 @@ interface Props {
   external_url?: string;
   read_more_url?: string;
   featured_image: string;
-  alignment: "left" | "right";
+  languages_n_tools?: string[];
 }
 
 const props = Astro.props;
@@ -21,15 +21,14 @@ if (!images[props.featured_image])
   );
 ---
 
-<div class={`alignment-${props.alignment} featured-project`}>
-  <div>
+<div class="featured-project">
+  <div class="featured-image-wrapper">
     <Image
       class="featured-image"
       src={props.featured_image
         ? images[props.featured_image]()
         : images["../assets/portrait.jpg"]()}
-      widths={[350, 700]}
-      sizes={"(max-width: 400px) 350px, (min-width: 351px) 700px"}
+      width={596}
       height={350}
       alt={props.title}
     />
@@ -82,61 +81,27 @@ if (!images[props.featured_image])
     </div>
   </div>
 </div>
-<br />
 
 <style>
   .featured-project {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 24px;
-    position: relative;
-  }
-
-  .featured-image {
     border-radius: 22px;
-    object-fit: cover;
-    object-position: center;
-    width: 90vw;
-    max-width: 710px;
-    max-height: 350px;
+    border: 1px solid var(--text);
   }
 
   .featured-project-context {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+    padding: 10px;
   }
 
   h2 {
-    font-size: 32px;
     margin: 0;
   }
 
-  .information,
-  .information-part-two {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-  }
-
-  @media only screen and (min-width: 730px) {
-    .featured-image {
-      width: calc(45vw - 50px);
-    }
-
-    .featured-project-context {
-      height: 350px;
-    }
-
-    .alignment-left {
-      flex-direction: row;
-    }
-
-    .alignment-right {
-      flex-direction: row-reverse;
-    }
+  .featured-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 570/339;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 20px 20px 0 0;
   }
 </style>
