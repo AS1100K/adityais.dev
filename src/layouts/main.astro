@@ -10,6 +10,7 @@ const default_description =
   "I'm a software developer with a passion for creating innovative solutions that simplify complex tasks. My work spans various domains, all entered around enhancing productivity and empowering others through building software that automates workflows, decisions, and everyday tasks.";
 
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -47,8 +48,6 @@ import Header from "../components/Header.astro";
     <main>
       <slot />
     </main>
-    <footer>
-      <!-- Footer goes here -->
-    </footer>
+    <Footer />
   </body>
 </html>
