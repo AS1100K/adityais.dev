@@ -1,47 +1,24 @@
-# Astro Starter Kit: Minimal
+<div align="center">
+  <img alt="Logo" src="./public/favicon.svg" width="100" />
+</div>
+<h1 align="center">
+  adityais.dev
+</h1>
+<p align="center">
+  My Personal Portfolio build with <a href="https://astro.build" target="_blank">Astro</a> and hosted
+  with <a href="https://netlify.com" target="_blank">Netlify</a>
+</p>
+<div align="center">
+    <img alt="Netlify Deployment Status" src="https://api.netlify.com/api/v1/badges/7a651a1b-529a-448f-a834-68a96efdb005/deploy-status" />
+</div>
 
-```sh
-npm create astro@latest -- --template minimal
-```
+![Demo](./demo.png)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+# TL;DR
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+If you wish, you can fork this repo. Please give me proper credit by linking back to [adityais.dev](adityais.dev). Thanks!
 
-## 🚀 Project Structure
+# 🛠 Installation & Set Up
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+If you want to run this site locally, please refer to
+[Astro Installation and Setup Guide](https://docs.astro.build/en/install-and-setup/)
