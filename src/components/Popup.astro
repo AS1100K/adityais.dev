@@ -1,0 +1,18 @@
+<div class="popup-wrapper">
+  <slot />
+</div>
+
+<style>
+  .popup-wrapper {
+    position: fixed;
+    z-index: 5;
+    bottom: 5vw;
+    right: 5vw;
+    padding: 10px;
+    border-radius: 22px;
+    border: 1px solid var(--text);
+    background-color: var(--background);
+    width: calc(90vw - 20px);
+    max-width: 400px;
+  }
+</style>
