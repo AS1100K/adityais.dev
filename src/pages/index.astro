@@ -3,6 +3,8 @@ import { Image } from "astro:assets";
 import Main from "../layouts/main.astro";
 import FeaturedProject from "../components/FeaturedProject.astro";
 import portrait from "../assets/portrait.jpg";
+import AutoGrid from "../components/TwoGrid.astro";
+import Button from "../components/Button.astro";
 ---
 
 <Main title="Aditya Kumar">
@@ -104,23 +106,39 @@ import portrait from "../assets/portrait.jpg";
   </div>
   <div class="soft-container">
     <h1 id="projects" class="primary-text poppins-bold">Featured Projects</h1>
-    <FeaturedProject
-      title="Aether"
-      alignment="left"
-      description={[
-        "A collection of high-performance Minecraft bots built in Rust to automate\
+    <AutoGrid cols={2}>
+      <FeaturedProject
+        title="Aether"
+        description={[
+          "A collection of high-performance Minecraft bots built in Rust to automate\
          resource collection and other tedious tasks.",
-        "These bots are designed to significantly reduce human effort, allowing \
+          "These bots are designed to significantly reduce human effort, allowing \
          players to focus on enjoying the game and spending time with friends, rather\
          than grinding for resources. By leveraging Rust, these bots achieve \
          exceptional performance and minimal memory usage, making them both powerful\
          and efficient.",
-      ]}
-      featured_image="/src/assets/featured-projects/aether.jpg"
-      github_url="https://github.com/as1100k/aether"
-    />
-    <!-- read_more_url="/sample-blog-post"
-      external_url="https://spacebots.org" -->
+        ]}
+        featured_image="/src/assets/featured-projects/aether.jpg"
+        github_url="https://github.com/as1100k/aether"
+      />
+      <!-- read_more_url="/sample-blog-post"
+    external_url="https://spacebots.org" -->
+      <FeaturedProject
+        title="Mailbridge"
+        description={[
+          "A simple Python program that lets you choose between Outlook, Gmail, or other\
+          mailboxes for centralized email storage, making email management effortless and secure.",
+        ]}
+        featured_image="/src/assets/featured-projects/mailbridge.jpeg"
+        github_url="https://github.com/as1100k/mailbridge"
+      />
+    </AutoGrid>
+    <br />
+    <center>
+      <a href="https://github.com/AS1100K?tab=repositories"
+        ><Button>See More</Button></a
+      >
+    </center>
   </div>
 </Main>
 
