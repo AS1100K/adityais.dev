@@ -1,0 +1,52 @@
+---
+import { Image } from "astro:assets";
+---
+
+<div class="social-wrapper">
+  <a href="https://github.com/as1100k"
+    ><button
+      ><Image
+        src="/assets/icons/github.svg"
+        width={24}
+        height={24}
+        alt="GitHub Social Link"
+      /></button
+    ></a
+  >
+  <a href="https://linkedin.com/in/as1100k"
+    ><button
+      ><Image
+        src="/assets/icons/linkedin.svg"
+        width={24}
+        height={24}
+        alt="LinkedIn Social Link"
+      /></button
+    ></a
+  >
+  <a href="https://x.com/as1100k"
+    ><button
+      ><Image
+        src="/assets/icons/twitter-x.svg"
+        width={24}
+        height={24}
+        alt="LinkedIn Social Link"
+      /></button
+    ></a
+  >
+</div>
+
+<style>
+  .social-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+  }
+
+  button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+</style>
