@@ -112,27 +112,28 @@ import SocialButtons from "../components/SocialButtons.astro";
       <FeaturedProject
         title="Aether"
         description={[
-          "A collection of high-performance Minecraft bots built in Rust to automate\
-         resource collection and other tedious tasks.",
-          "These bots are designed to significantly reduce human effort, allowing \
-         players to focus on enjoying the game and spending time with friends, rather\
-         than grinding for resources. By leveraging Rust, these bots achieve \
-         exceptional performance and minimal memory usage, making them both powerful\
-         and efficient.",
+          "Collection of Minecraft Bots and Plugins written in rust.",
         ]}
-        featured_image="/src/assets/featured-projects/aether.jpg"
+        stars={5}
         github_url="https://github.com/as1100k/aether"
+        languages_n_tools={["Rust"]}
       />
-      <!-- read_more_url="/sample-blog-post"
-    external_url="https://spacebots.org" -->
       <FeaturedProject
-        title="Mailbridge"
+        title="bevy-discord"
         description={[
-          "A simple Python program that lets you choose between Outlook, Gmail, or other\
-          mailboxes for centralized email storage, making email management effortless and secure.",
+          "A very simple, bevy plugin that let you send and receive discord messages through bevy events.",
         ]}
-        featured_image="/src/assets/featured-projects/mailbridge.jpeg"
-        github_url="https://github.com/as1100k/mailbridge"
+        stars={3}
+        github_url="https://github.com/as1100k/aether"
+        external_url="https://docs.rs/bevy-discord"
+        languages_n_tools={["Rust"]}
+      />
+      <FeaturedProject
+        title="rs-workspace/rust-toolchain"
+        description={["A very simple GitHub action to install rust toolchain."]}
+        stars={1}
+        github_url="https://github.com/rs-workspace/rust-toolchain"
+        languages_n_tools={["TypeScript"]}
       />
     </AutoGrid>
     <br />
