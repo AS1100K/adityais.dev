@@ -117,7 +117,7 @@ const props = Astro.props;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     position: absolute;
     bottom: 10px;
     width: calc(100% - 30px);
@@ -125,9 +125,15 @@ const props = Astro.props;
 
   .featured-footer > div {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 10px;
+  }
+
+  .featured-footer a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .language {
@@ -140,5 +146,6 @@ const props = Astro.props;
 
   .language p {
     padding: 5px 10px;
+    font-size: 14px;
   }
 </style>

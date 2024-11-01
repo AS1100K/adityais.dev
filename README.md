@@ -16,7 +16,7 @@
 
 # TL;DR
 
-If you wish, you can fork this repo. Please give me proper credit by linking back to [adityais.dev](adityais.dev). Thanks!
+If you wish, you can fork this repo. Please give me proper credit by linking back to [adityais.dev](https://adityais.dev). Thanks!
 
 # 🛠 Installation & Set Up
 
