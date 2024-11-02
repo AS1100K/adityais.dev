@@ -1,6 +1,6 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 
-import netlify from "@astrojs/netlify";
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
@@ -36,13 +36,12 @@ export default defineConfig({
       transformers: [],
     },
   },
-
   output: "server",
-  adapter: netlify({
-    imageCDN: true,
-    cacheOnDemandPages: true,
-    experimental: {
-      serverIslands: true,
+
+  adapter: cloudflare({
+    imageService: "compile",
+    platformProxy: {
+      enabled: true,
     },
   }),
 });

@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import axios from "axios";
 
 interface Props {
   title: string;
@@ -25,23 +24,34 @@ interface Props {
 const props = Astro.props;
 
 if (!props.stars && props.github_url) {
-  let github_api_key = import.meta.env.GITHUB_API_KEY;
+  try {
+    const { GITHUB_API_KEY } = Astro.locals.runtime.env;
 
-  let res = await axios.get(
-    `https://api.github.com/repos/${props.github_url}`,
-    {
-      headers: {
-        Accept: "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-        Authorization: `Bearer ${github_api_key}`,
+    let response = await fetch(
+      `https://api.github.com/repos/${props.github_url}`,
+      {
+        headers: {
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+          Authorization: `Bearer ${GITHUB_API_KEY}`,
+          // Use your own github username here
+          "User-Agent": "AS1100K",
+        },
       },
-    },
-  );
+    );
 
-  if (res.status === 200) {
-    props.stars = res.data.stargazers_count;
-    props.github_url = res.data.html_url;
-    props.is_archived = res.data.archived;
+    if (!response.ok) {
+      throw new Error(
+        `Response status: ${response.status} Response body: ${await response.text()}`,
+      );
+    }
+
+    const json = await response.json();
+    props.stars = json.stargazers_count;
+    props.github_url = json.html_url;
+    props.is_archived = json.archived;
+  } catch (error) {
+    console.error(error);
   }
 }
 
