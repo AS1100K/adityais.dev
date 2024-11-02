@@ -28,3 +28,5 @@ pnpm-debug.log*
 
 # Local wrangler foler
 .wrangler
+wrangler.toml
+worker-configuration.d.ts
