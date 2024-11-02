@@ -1,4 +1,4 @@
-import { defineConfig, envField } from "astro/config";
+import { defineConfig } from "astro/config";
 
 import cloudflare from "@astrojs/cloudflare";
 
