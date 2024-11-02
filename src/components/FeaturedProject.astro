@@ -39,7 +39,6 @@ if (!props.stars && props.github_url) {
   );
 
   if (res.status === 200) {
-    console.log(res.data.stargazers_count);
     props.stars = res.data.stargazers_count;
     props.github_url = res.data.html_url;
     props.is_archived = res.data.archived;
