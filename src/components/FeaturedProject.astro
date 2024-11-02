@@ -26,7 +26,7 @@ const props = Astro.props;
 if (!props.stars && props.github_url) {
   try {
     const { GITHUB_API_KEY } = Astro.locals.runtime.env;
-    
+
     let response = await fetch(
       `https://api.github.com/repos/${props.github_url}`,
       {
@@ -39,7 +39,9 @@ if (!props.stars && props.github_url) {
     );
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      throw new Error(
+        `Response status: ${response.status} Response body: ${await response.text()}`,
+      );
     }
 
     const json = await response.json();
