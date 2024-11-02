@@ -6,11 +6,8 @@
 </h1>
 <p align="center">
   My Personal Portfolio build with <a href="https://astro.build" target="_blank">Astro</a> and hosted
-  with <a href="https://netlify.com" target="_blank">Netlify</a>
+  with <a href="https://pages.cloudflare.com/" target="_blank">Cloudflare Pages</a>
 </p>
-<div align="center">
-    <img alt="Netlify Deployment Status" src="https://api.netlify.com/api/v1/badges/7a651a1b-529a-448f-a834-68a96efdb005/deploy-status" />
-</div>
 
 ![Demo](./demo.png)
 
