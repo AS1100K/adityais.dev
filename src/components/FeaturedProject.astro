@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import axios from "axios";
 
 interface Props {
   title: string;
@@ -27,21 +26,19 @@ const props = Astro.props;
 if (!props.stars && props.github_url) {
   let github_api_key = import.meta.env.GITHUB_API_KEY;
 
-  let res = await axios.get(
-    `https://api.github.com/repos/${props.github_url}`,
-    {
-      headers: {
-        Accept: "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-        Authorization: `Bearer ${github_api_key}`,
-      },
+  let res = await fetch(`https://api.github.com/repos/${props.github_url}`, {
+    headers: {
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      Authorization: `Bearer ${github_api_key}`,
     },
-  );
+  });
 
-  if (res.status === 200) {
-    props.stars = res.data.stargazers_count;
-    props.github_url = res.data.html_url;
-    props.is_archived = res.data.archived;
+  if (res.ok) {
+    let res_json = await res.json();
+    props.stars = res_json.stargazers_count;
+    props.github_url = res_json.html_url;
+    props.is_archived = res_json.archived;
   }
 }
 

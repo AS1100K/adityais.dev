@@ -14,7 +14,6 @@
     "@astrojs/cloudflare": "^11.2.0",
     "astro": "^4.15.1",
     "astro-navbar": "^2.3.3",
-    "axios": "^1.7.7",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
