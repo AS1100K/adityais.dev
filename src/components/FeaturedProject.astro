@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import { GITHUB_API_KEY } from "astro:env/server";
 
 interface Props {
   title: string;
@@ -26,6 +25,8 @@ const props = Astro.props;
 
 if (!props.stars && props.github_url) {
   try {
+    const { GITHUB_API_KEY } = Astro.locals.runtime.env;
+    
     let response = await fetch(
       `https://api.github.com/repos/${props.github_url}`,
       {
