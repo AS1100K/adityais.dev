@@ -1,5 +1,7 @@
 import { defineConfig } from "astro/config";
 
+import netlify from "@astrojs/netlify";
+
 // https://astro.build/config
 export default defineConfig({
   markdown: {
@@ -34,4 +36,13 @@ export default defineConfig({
       transformers: [],
     },
   },
+
+  output: "server",
+  adapter: netlify({
+    imageCDN: true,
+    cacheOnDemandPages: true,
+    experimental: {
+      serverIsland: true,
+    },
+  }),
 });

@@ -1,17 +1,58 @@
 ---
 import { Image } from "astro:assets";
+import axios from "axios";
 
 interface Props {
   title: string;
+  is_archived?: boolean;
   description: string[];
+  /** Number of stars of the repo.
+   *
+   * NOTE: If `stars` are not provided but `github_url` is provided then
+   * it will automatically populate.
+   */
   stars?: number;
+  /** GitHub Repository URL
+   *
+   * format -> `{owner}/{repo}`
+   */
   github_url?: string;
   external_url?: string;
-  read_more_url?: string;
+  /** List of languages and tool used in this project */
   languages_n_tools?: string[];
 }
 
 const props = Astro.props;
+
+if (!props.stars && props.github_url) {
+  let github_api_key = import.meta.env.GITHUB_API_KEY;
+
+  let res = await axios.get(
+    `https://api.github.com/repos/${props.github_url}`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        Authorization: `Bearer ${github_api_key}`,
+      },
+    },
+  );
+
+  if (res.status === 200) {
+    console.log(res.data.stargazers_count);
+    props.stars = res.data.stargazers_count;
+    props.github_url = res.data.html_url;
+    props.is_archived = res.data.archived;
+  }
+}
+
+export const prerender = true;
+
+// Cache this page for 1 day
+Astro.response.headers.set(
+  "CDN-Cache-Control",
+  "public, max-age=86400, must-revalidate",
+);
 ---
 
 <div class="featured-project">
@@ -24,16 +65,27 @@ const props = Astro.props;
         alt="Repo Icon"
       />
       <h2>{props.title}</h2>
+      {
+        props.is_archived && (
+          <div class="archived">
+            <p>archived</p>
+          </div>
+        )
+      }
     </div>
-    <div>
-      <Image
-        src="/assets/icons/star.svg"
-        width={24}
-        height={24}
-        alt="Stars of repository"
-      />
-      <p>{props.stars}</p>
-    </div>
+    {
+      props.stars && (
+        <div>
+          <Image
+            src="/assets/icons/star.svg"
+            width={24}
+            height={24}
+            alt="Stars of repository"
+          />
+          <p>{props.stars}</p>
+        </div>
+      )
+    }
   </div>
   <p>{props.description}</p>
   <div class="featured-footer">
@@ -144,8 +196,22 @@ const props = Astro.props;
     align-items: center;
   }
 
-  .language p {
+  .language p,
+  .archived p {
     padding: 5px 10px;
     font-size: 14px;
+  }
+
+  .archived {
+    border-radius: 50px;
+    border: 1px solid rgb(154, 103, 0);
+    color: rgb(154, 103, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .archived p {
+    color: rgb(154, 103, 0);
   }
 </style>
