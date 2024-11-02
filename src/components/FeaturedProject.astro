@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { GITHUB_API_KEY } from "astro:env/server";
 
 interface Props {
   title: string;
@@ -24,13 +25,11 @@ interface Props {
 const props = Astro.props;
 
 if (!props.stars && props.github_url) {
-  let github_api_key = import.meta.env.GITHUB_API_KEY;
-
   let res = await fetch(`https://api.github.com/repos/${props.github_url}`, {
     headers: {
       Accept: "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28",
-      Authorization: `Bearer ${github_api_key}`,
+      Authorization: `Bearer ${GITHUB_API_KEY}`,
     },
   });
 
@@ -39,6 +38,8 @@ if (!props.stars && props.github_url) {
     props.stars = res_json.stargazers_count;
     props.github_url = res_json.html_url;
     props.is_archived = res_json.archived;
+  } else {
+    console.error("Failed to get response from GitHub Api(s)");
   }
 }
 
