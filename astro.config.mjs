@@ -42,7 +42,7 @@ export default defineConfig({
     imageCDN: true,
     cacheOnDemandPages: true,
     experimental: {
-      serverIsland: true,
+      serverIslands: true,
     },
   }),
 });
