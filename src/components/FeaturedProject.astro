@@ -34,6 +34,8 @@ if (!props.stars && props.github_url) {
           Accept: "application/vnd.github+json",
           "X-GitHub-Api-Version": "2022-11-28",
           Authorization: `Bearer ${GITHUB_API_KEY}`,
+          // Use your own github username here
+          "User-Agent": "AS1100K",
         },
       },
     );
