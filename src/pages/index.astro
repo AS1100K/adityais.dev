@@ -9,22 +9,21 @@ import SocialButtons from "../components/SocialButtons.astro";
 ---
 
 <Main title="Aditya Kumar">
-  <div class="hero container" id="home">
-    <div class="hero-content">
+  <div
+    class="flex justify-end items-center relative gap-12 container h-[90vh]"
+    id="home"
+  >
+    <div class="width-[90vw] max-w-2xl absolute z-10 left-0">
       <p>Hi, my name is</p>
-      <h1
-        class="heading-text primary-text poppins-black"
-        style="line-height: 100%; margin: 0;"
-      >
+      <h1 class="text-3xl md:text-5xl primary-text poppins-black mt-3">
         Aditya Kumar.
       </h1>
       <h1
-        class="heading-text secondary-text poppins-extrabold"
-        style="line-height: 100%; margin: 0; margin-top: 10px;"
+        class="secondary-text poppins-extrabold text-3xl md:text-5xl mt-3 mb-3"
       >
         I love automating every thing.
       </h1>
-      <p>
+      <p class="text-base mb-3">
         I'm a software developer with a passion for creating innovative
         solutions that simplify complex tasks. My work spans various domains,
         all entered around enhancing productivity and empowering others through
@@ -33,7 +32,7 @@ import SocialButtons from "../components/SocialButtons.astro";
       </p>
       <SocialButtons />
     </div>
-    <div class="img-wrapper-hero">
+    <div>
       <Image
         src={portrait}
         alt="Self Portrait"
@@ -41,20 +40,29 @@ import SocialButtons from "../components/SocialButtons.astro";
         sizes={"(max-width: 886px) 430px, (max-width: 1280px) 510px, 1200px"}
         quality="high"
         loading="eager"
+        class:list={[
+          "hidden",
+          "md:block md:w-auto md:h-[90vh] md:max-w[701px] md:rounded-3xl",
+        ]}
       />
     </div>
   </div>
-  <div class="about" id="about">
-    <div class="hero-content">
-      <h1 class="primary-text poppins-bold">About Me</h1>
-      <p>Hello, my name is Aditya, and I enjoy automating stuff.</p>
-      <p>
+  <div
+    class="relative flex flex-col items-start justify-center min-h-[90vh] h-fit"
+    id="about"
+  >
+    <div class="width-[90vw] max-w-2xl">
+      <h1 class="primary-text poppins-bold text-4xl mb-10">About Me</h1>
+      <p class="text-base mb-3">
+        Hello, my name is Aditya, and I enjoy automating stuff.
+      </p>
+      <p class="text-base mb-3">
         My journey into programming began back in 2020 when I was in 9th grade.
         What started as a curiosity quickly turned into a passion as I dived
         into Web Development and gradually expanded my knowledge across various
         programming languages.
       </p>
-      <p>
+      <p class="text-base">
         Fast forward to today, I've found a deep appreciation for Rust, a
         language that impresses me with its design principles, addressing many
         of the pitfalls found in other systems languages. My current focus is on
@@ -62,19 +70,20 @@ import SocialButtons from "../components/SocialButtons.astro";
         grow as a developer.
       </p>
     </div>
-    <div class="img-wrapper-about">
+    <div>
       <Image
         src={portrait}
         alt="Self Portrait"
         widths={[430, 510, 1200]}
         sizes={"(max-width: 886px) 430px, (max-width: 1280px) 510px, 1200px"}
         quality="high"
+        class:list={["w-[90vw] h-auto rounded-3xl my-10", "sm:hidden"]}
       />
     </div>
   </div>
-  <div class="skills soft-container">
-    <h1 id="skills" class="primary-text poppins-bold">Skills</h1>
-    <div>
+  <div class="my-12">
+    <h1 id="skills" class="primary-text poppins-bold text-4xl mb-10">Skills</h1>
+    <div class="flex justify-between items-start flex-wrap">
       <ul>
         <li><b>Languages</b></li>
         <li>HTML</li>
@@ -107,7 +116,7 @@ import SocialButtons from "../components/SocialButtons.astro";
       </ul>
     </div>
   </div>
-  <div class="soft-container">
+  <div class="mx-12">
     <h1 id="projects" class="primary-text poppins-bold">Featured Projects</h1>
     <AutoGrid cols={2}>
       <FeaturedProject
@@ -144,82 +153,9 @@ import SocialButtons from "../components/SocialButtons.astro";
 </Main>
 
 <style>
-  .img-wrapper-hero > img {
-    display: none;
-  }
-
-  .img-wrapper-about > img {
-    display: unset;
-    width: 90vw;
-    height: auto;
-    border-radius: 22px;
-  }
-
-  .hero {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    gap: 50px;
-    position: relative;
-  }
-
-  .about {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    min-height: 90vh;
-    height: fit-content;
-  }
-
-  .skills > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-  }
-
-  @media only screen and (min-width: 500px) {
-    .img-wrapper-about > img {
-      display: none;
-    }
-  }
-
-  @media only screen and (min-width: 730px) {
-    .img-wrapper-hero > img {
-      display: unset;
-      width: auto;
-      height: 90vh;
-      max-height: 701px;
-      border-radius: 22px;
-    }
-
-    .hero-content {
-      width: 90vw;
-      max-width: 645px;
-      position: absolute;
-      z-index: 5;
-      left: 0;
-    }
-
-    .hero-content > p:last-child {
-      background-color: var(--background);
-      padding: 10px 10px 10px 0;
-      border-radius: 11px;
-    }
-  }
-
-  @media only screen and (max-width: 886px) {
-    .img-wrapper-hero > img {
-      width: 50vw;
-      height: auto;
-    }
   }
 </style>
