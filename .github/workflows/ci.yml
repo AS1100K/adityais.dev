@@ -40,19 +40,15 @@ jobs:
       run: |
         git add .
         git commit -m "chore: Update submodule [no ci]"
-      
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.REPOSITORY_PAT }}
-        branch: main
-      continue-on-error: true
+        git push || echo "No changes to commit"
 
   build:
     needs: update-submodule
     runs-on: ubuntu-latest
 
     steps:
+    - name: Sleep for 5 seconds
+      run: sleep 5
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
