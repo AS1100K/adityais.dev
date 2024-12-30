@@ -56,14 +56,6 @@ a:hover {
   border: 0;
 }
 
-.primary-text {
-  color: var(--accent);
-}
-
-.secondary-text {
-  color: var(--secondary);
-}
-
 .clickable {
   cursor: pointer;
 }

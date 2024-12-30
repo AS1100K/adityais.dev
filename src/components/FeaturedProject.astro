@@ -64,50 +64,51 @@ Astro.response.headers.set(
 );
 ---
 
-<div class="featured-project">
-  <div class="featured-headline">
-    <div>
+<div class="rounded-xl border-1 border-solid border-text p-4 pb-12 m-0 relative">
+  <div class="flex justify-between items-center mb-2">
+    <div class="flex justify-start items-center mb-2 gap-2">
       <Image
         src="/assets/icons/repo.svg"
         width={24}
         height={24}
         alt="Repo Icon"
       />
-      <h2>{props.title}</h2>
+      <h2 class="text-lg m-0 p-0 poppins-bold">{props.title}</h2>
       {
         props.is_archived && (
-          <div class="archived">
-            <p>archived</p>
+          <div class="archived rounded-[50px] border-[#9a6700] text-[#9a6700] border-1 border-solid flex justify-center items-center">
+            <p class="m-0 py-1 px-2 text-[#9a6700]">archived</p>
           </div>
         )
       }
     </div>
     {
       props.stars && (
-        <div>
+        <div class="flex justify-start items-center mb-2 gap-1">
           <Image
             src="/assets/icons/star.svg"
             width={24}
             height={24}
             alt="Stars of repository"
           />
-          <p>{props.stars}</p>
+          <p class="m-0">{props.stars}</p>
         </div>
       )
     }
   </div>
-  <p>{props.description}</p>
-  <div class="featured-footer">
-    <div>
+  <p class="m-0">{props.description}</p>
+  <!-- TODO: width: calc(100% - 1rem) -->
+  <div class="flex justify-between items-center absolute bottom-2 w-featured_project">
+    <div class="flex justify-center items-center gap-2">
       {
         props.languages_n_tools?.map((language) => (
-          <div class="language">
-            <p>{language}</p>
+          <div class="rounded-[50px] bg-secondary flex justify-center items-center">
+            <p class="m-0 px-3 py-1 text-sm">{language}</p>
           </div>
         ))
       }
     </div>
-    <div>
+    <div class="flex justify-center items-center gap-2">
       {
         props.external_url && (
           <a href={props.external_url}>
@@ -122,7 +123,7 @@ Astro.response.headers.set(
       }
       {
         props.github_url && (
-          <a href={props.github_url}>
+          <a class="flex justify-center items-center" href={props.github_url}>
             <Image
               src="/assets/icons/github.svg"
               width={24}
@@ -135,92 +136,3 @@ Astro.response.headers.set(
     </div>
   </div>
 </div>
-
-<style>
-  .featured-project {
-    border-radius: 11px;
-    border: 1px solid var(--text);
-    padding: 15px;
-    padding-bottom: 50px;
-    margin: 0;
-    position: relative;
-  }
-
-  .featured-project p {
-    margin: 0;
-  }
-
-  .featured-headline {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .featured-headline > div {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .featured-headline > div:last-child {
-    gap: 5px;
-  }
-
-  .featured-headline > div > h2 {
-    font-size: 20px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .featured-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* margin-top: 10px; */
-    position: absolute;
-    bottom: 10px;
-    width: calc(100% - 30px);
-  }
-
-  .featured-footer > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .featured-footer a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .language {
-    border-radius: 50px;
-    background-color: var(--secondary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .language p,
-  .archived p {
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-
-  .archived {
-    border-radius: 50px;
-    border: 1px solid rgb(154, 103, 0);
-    color: rgb(154, 103, 0);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .archived p {
-    color: rgb(154, 103, 0);
-  }
-</style>
