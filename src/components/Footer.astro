@@ -1,8 +1,29 @@
+---
+import childProcess from "child_process";
+
+const hash = childProcess
+	.execSync("git rev-parse --short HEAD")
+	.toString()
+	.trim();
+
+const content_hash = childProcess
+	.execSync("cd adityais.dev-content && git rev-parse --short HEAD")
+	.toString()
+	.trim();
+---
+
 <footer class="my-10">
   <p>
     Designed and Developed by <a
       class="primary-text"
       href="https://github.com/as1100k">Aditya Kumar</a
     >
+    
+    <div class="flex items-center gap-4 justify-start">
+      <p class="text-sm text-gray-400">Debug Info</p><span class="text-gray-300"> | </span>
+      <p class="text-sm text-gray-400">Build Time: { new Date(Date.now()).toLocaleString(undefined, {timeZone: 'Asia/Kolkata', dateStyle: 'full'}) }</p><span class="text-gray-300"> | </span>
+      <p class="text-sm text-gray-400">Website Commit: <a class="underline" href=`https://github.com/as1100k/adityais.dev/tree/${hash}`>{hash}</a></p><span class="text-gray-300"> | </span>
+      <p class="text-sm text-gray-400">Content Commit: <a class="underline" href=`https://github.com/as1100k/adityais.dev-content/tree/${content_hash}`>{content_hash}</a></p>
+    </div>
   </p>
 </footer>
