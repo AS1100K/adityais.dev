@@ -39,8 +39,12 @@ jobs:
     - name: Commit changes
       run: |
         git add .
-        git commit -m "chore: Update submodule [no ci]"
-        git push || echo "No changes to commit"
+        if ! git diff-index --quiet HEAD; then
+          git commit -m "chore: Update submodule [no ci]"
+          git push
+        else
+          echo "No changes to commit"
+        fi
 
   build:
     needs: update-submodule
