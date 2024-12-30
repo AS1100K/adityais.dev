@@ -4,22 +4,22 @@ export default {
 		"./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
 		"./adityais.dev-content/**/*.{md, mdx}",
 	],
-  theme: {
-    extend: {
-      borderWidth: {
+	theme: {
+		extend: {
+			borderWidth: {
 				1: "1px",
-      },
-      width: {
+			},
+			width: {
 				featured_project: "calc(100% - 2rem)",
-      },
-      colors: {
-        primary: "#56ba63",
-        secondary: "#9cdda4",
-        accent: "#6fd67d",
-        background: "#f9fcf9",
-        text: "#09100a",
-      },
-fontFamily: {
+			},
+			colors: {
+				primary: "#56ba63",
+				secondary: "#9cdda4",
+				accent: "#6fd67d",
+				background: "#f9fcf9",
+				text: "#09100a",
+			},
+			fontFamily: {
 				sans: ["Poppins", "sans-serif"],
 			},
 			fontWeight: {
@@ -31,7 +31,7 @@ fontFamily: {
 				regular: 400,
 
 			},
-    },
-  },
-  plugins: [],
+		},
+	},
+	plugins: [require("@tailwindcss/typography")],
 };

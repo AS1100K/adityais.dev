@@ -1,8 +1,21 @@
 ---
 import Main from "./main.astro";
+import Prose from "../components/Prose.astro";
+
+export interface Props {
+	frontmatter: {
+		title: string;
+		description?: string;
+	};
+}
+
 const { frontmatter } = Astro.props;
 ---
 
 <Main title={frontmatter.title} description={frontmatter.description}>
-    <slot/>
+    <article>
+        <Prose>
+            <slot/>
+        </Prose>
+    </article>    
 </Main>
