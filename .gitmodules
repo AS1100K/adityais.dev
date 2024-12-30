@@ -1,0 +1,3 @@
+[submodule "adityais.dev-content"]
+	path = adityais.dev-content
+	url = https://github.com/AS1100K/adityais.dev-content.git
