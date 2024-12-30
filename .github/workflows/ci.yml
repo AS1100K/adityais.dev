@@ -58,6 +58,11 @@ jobs:
       with:
         submodules: recursive # Checkout submodules
         token: ${{ secrets.REPOSITORY_PAT }}
+    
+    - name: Update Submodule
+      run: |
+        git pull --recurse-submodules
+        git submodule update --remote --recursive
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
