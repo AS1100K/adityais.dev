@@ -41,4 +41,10 @@ export default defineConfig({
   },
 
   integrations: [sitemap(), tailwind()],
+
+  vite: {
+    resolve: {
+      preserveSymlinks: true
+    }
+  }
 });
