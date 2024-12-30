@@ -1,0 +1,38 @@
+name: Auto Update Submodule
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # Runs at 5:30 PM IST (12:00 PM UTC)
+  workflow_dispatch:
+
+jobs:
+  update-submodule:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive # Checkout submodules
+        token: ${{ secrets.REPOSITORY_PAT }}
+
+    - name: Git config
+      run: |
+        git config --global user.name "adityais.dev-submodule-updater[bot]"
+        git config --global user.email "adityais.dev-submodule-updater[bot]@users.noreply.github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+
+    - name: Git Submodule Update
+      run: |
+        git pull --recurse-submodules
+        git submodule update --remote --recursive
+
+    - name: Commit changes
+      run: |
+        git add .
+        if ! git diff-index --quiet HEAD; then
+          git commit -m "chore: Update submodule [no ci]"
+          git push
+        else
+          echo "No changes to commit"
+        fi
