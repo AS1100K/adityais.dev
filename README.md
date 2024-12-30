@@ -6,7 +6,7 @@
 </h1>
 <p align="center">
   My Personal Portfolio build with <a href="https://astro.build" target="_blank">Astro</a> and hosted
-  with <a href="https://pages.cloudflare.com/" target="_blank">Cloudflare Pages</a>
+  with <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
 </p>
 
 ![Demo](./demo.png)

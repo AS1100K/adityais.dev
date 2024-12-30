@@ -25,9 +25,9 @@ const props = Astro.props;
 
 if (!props.stars && props.github_url) {
   try {
-    const { GITHUB_API_KEY } = Astro.locals.runtime.env;
+    const { GITHUB_API_KEY } = await import.meta.env;
 
-    let response = await fetch(
+    const response = await fetch(
       `https://api.github.com/repos/${props.github_url}`,
       {
         headers: {
@@ -97,7 +97,6 @@ Astro.response.headers.set(
     }
   </div>
   <p class="m-0">{props.description}</p>
-  <!-- TODO: width: calc(100% - 1rem) -->
   <div class="flex justify-between items-center absolute bottom-2 w-featured_project">
     <div class="flex justify-center items-center gap-2">
       {
