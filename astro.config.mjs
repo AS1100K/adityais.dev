@@ -44,7 +44,7 @@ export default defineConfig({
 		sitemap({
 			changefreq: "daily",
 			priority: 0.7,
-			filter: (page) => !page.path.includes("draft"),
+			filter: (page) => !page.includes("draft"),
 		}),
 		tailwind(),
 	],
