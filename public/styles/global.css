@@ -37,18 +37,6 @@ li {
   color: var(--text);
 }
 
-.heading-text {
-  font-size: 48px;
-}
-
-h1 {
-  font-size: 40px;
-}
-
-h2 {
-  font-size: 32px;
-}
-
 a {
   color: var(--text);
   text-decoration: none;
@@ -68,28 +56,6 @@ a:hover {
   border: 0;
 }
 
-.primary-text {
-  color: var(--accent);
-}
-
-.secondary-text {
-  color: var(--secondary);
-}
-
 .clickable {
   cursor: pointer;
-}
-
-.container {
-  height: 90vh;
-}
-
-.soft-container {
-  margin: 50px 0;
-}
-
-@media only screen and (max-width: 700px) {
-  .heading-text {
-    font-size: 32px;
-  }
 }
