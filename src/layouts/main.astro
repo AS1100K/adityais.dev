@@ -11,7 +11,6 @@ const default_description =
 
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import Popup from "../components/Popup.astro";
 ---
 
 <!doctype html>
@@ -49,13 +48,6 @@ import Popup from "../components/Popup.astro";
     <Header />
     <main>
       <slot />
-      <Popup>
-        <p><b>🚧This site is actively developed🚧</b></p>
-        <p>
-          There are still many features which are under development to automate
-          most parts of this site.
-        </p>
-      </Popup>
     </main>
     <Footer />
   </body>
