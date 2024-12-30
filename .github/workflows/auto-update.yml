@@ -7,18 +7,14 @@ on:
   schedule:
     - cron: '30 12 * * *' # Runs at 6:00 PM IST (12:30 PM UTC)
 
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
+  pages: write
+
 jobs:
   build:
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
 
     steps:
@@ -43,9 +39,21 @@ jobs:
       run: npm run build
 
     - name: Upload GitHub Pages Artifact
-      uses: actions/upload-artifact@v3
+      id: deployment
+      uses: actions/upload-pages-artifact@v3
       with:
         path: dist
 
+  deploy:
+    needs: build
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Deploy to GitHub Pages
       uses: actions/deploy-pages@v4
