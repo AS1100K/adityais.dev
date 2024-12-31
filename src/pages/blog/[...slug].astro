@@ -17,6 +17,6 @@ const blog = Astro.props;
 const { Content } = await render(blog);
 ---
 
-<Blog frontmatter={blog.data}>
+<Blog frontmatter={{ ...blog.data, title: blog.data.title || "Default Title" }}>
     <Content />
 </Blog>
