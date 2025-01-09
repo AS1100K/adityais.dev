@@ -9,26 +9,28 @@ import SocialButtons from "../components/SocialButtons.astro";
 ---
 
 <Main title="Aditya Kumar">
-  <div
-    class="flex justify-end items-center relative gap-12 container h-[90vh]"
-    id="home"
-  >
+  <div class="flex justify-end items-center relative gap-12 container h-[90vh]" id="home">
     <div class="width-[90vw] max-w-2xl absolute z-10 left-0">
+      <!-- TODO: Automate this section-->
+      <div class="relative">
+        <a href="/blog/2024-year-in-review">
+          <div
+            class="text-sm italic px-4 py-2 border-1 w-fit rounded-3xl absolute left-[-1rem] top-[-2.5rem] cursor-pointer"
+          >
+            Read Blog: 2024 year in review
+          </div>
+        </a>
+      </div>
       <p>Hi, my name is</p>
-      <h1 class="text-3xl md:text-5xl text-primary font-black mt-3">
-        Aditya Kumar.
-      </h1>
-      <h1
-        class="text-secondary font-extrabold text-3xl md:text-5xl mt-3 mb-3"
-      >
+      <h1 class="text-3xl md:text-5xl text-primary font-black mt-3">Aditya Kumar.</h1>
+      <h1 class="text-secondary font-extrabold text-3xl md:text-5xl mt-3 mb-3">
         I love automating every thing.
       </h1>
       <p class="text-base mb-3">
-        I'm a software developer with a passion for creating innovative
-        solutions that simplify complex tasks. My work spans various domains,
-        all entered around enhancing productivity and empowering others through
-        building software that automates workflows, decisions, and everyday
-        tasks.
+        I'm a software developer with a passion for creating innovative solutions that simplify
+        complex tasks. My work spans various domains, all entered around enhancing productivity and
+        empowering others through building software that automates workflows, decisions, and
+        everyday tasks.
       </p>
       <SocialButtons />
     </div>
@@ -40,34 +42,24 @@ import SocialButtons from "../components/SocialButtons.astro";
         sizes={"(max-width: 886px) 430px, (max-width: 1280px) 510px, 1200px"}
         quality="high"
         loading="eager"
-        class:list={[
-          "hidden",
-          "md:block md:w-auto md:h-[90vh] md:max-h-[701px] md:rounded-3xl",
-        ]}
+        class:list={["hidden", "md:block md:w-auto md:h-[90vh] md:max-h-[701px] md:rounded-3xl"]}
       />
     </div>
   </div>
-  <div
-    class="relative flex flex-col items-start justify-center min-h-[90vh] h-fit"
-    id="about"
-  >
+  <div class="relative flex flex-col items-start justify-center min-h-[90vh] h-fit" id="about">
     <div class="width-[90vw] max-w-2xl">
       <h1 class="text-primary font-bold text-4xl mb-10">About Me</h1>
+      <p class="text-base mb-3">Hello, my name is Aditya, and I enjoy automating stuff.</p>
       <p class="text-base mb-3">
-        Hello, my name is Aditya, and I enjoy automating stuff.
-      </p>
-      <p class="text-base mb-3">
-        My journey into programming began back in 2020 when I was in 9th grade.
-        What started as a curiosity quickly turned into a passion as I dived
-        into Web Development and gradually expanded my knowledge across various
-        programming languages.
+        My journey into programming began back in 2020 when I was in 9th grade. What started as a
+        curiosity quickly turned into a passion as I dived into Web Development and gradually
+        expanded my knowledge across various programming languages.
       </p>
       <p class="text-base">
-        Fast forward to today, I've found a deep appreciation for Rust, a
-        language that impresses me with its design principles, addressing many
-        of the pitfalls found in other systems languages. My current focus is on
-        honing my skills and giving back to the community that has helped me
-        grow as a developer.
+        Fast forward to today, I've found a deep appreciation for Rust, a language that impresses me
+        with its design principles, addressing many of the pitfalls found in other systems
+        languages. My current focus is on honing my skills and giving back to the community that has
+        helped me grow as a developer.
       </p>
     </div>
     <div>
@@ -150,9 +142,7 @@ import SocialButtons from "../components/SocialButtons.astro";
     </AutoGrid>
     <br />
     <center>
-      <a href="https://github.com/AS1100K?tab=repositories"
-        ><Button>See More</Button></a
-      >
+      <a href="https://github.com/AS1100K?tab=repositories"><Button>See More</Button></a>
     </center>
   </div>
 </Main>
