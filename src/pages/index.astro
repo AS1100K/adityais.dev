@@ -121,9 +121,7 @@ import SocialButtons from "../components/SocialButtons.astro";
     <AutoGrid>
       <FeaturedProject
         title="Aether"
-        description={[
-          "Collection of Minecraft Bots and Plugins written in rust.",
-        ]}
+        description={["Collection of Minecraft Bots and Plugins written in rust."]}
         github_url="as1100k/aether"
         languages_n_tools={["Rust", "Bevy"]}
       />
@@ -141,6 +139,13 @@ import SocialButtons from "../components/SocialButtons.astro";
         description={["A very simple GitHub action to install rust toolchain."]}
         github_url="rs-workspace/rust-toolchain"
         languages_n_tools={["TypeScript", "GitHub Actions"]}
+      />
+      <FeaturedProject
+        title="cargo-wiki"
+        description={["Cargo Extension for generating rust doc in markdown."]}
+        github_url="as1100k/cargo-wiki"
+        languages_n_tools={["Rust", "rustdoc", "Cargo", "Extension"]}
+        wip={true}
       />
     </AutoGrid>
     <br />
