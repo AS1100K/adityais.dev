@@ -1,0 +1,46 @@
+---
+import Main from "@layout/main.astro";
+import { Image } from "astro:assets";
+---
+
+<Main title="Contact Aditya Kumar">
+    <div class="min-h-full_page my-12">
+        <h1 class="text-4xl font-bold text-primary">Contact Me</h1>
+        <p class="text-base mt-3 lg:max-w-[50%]">
+            I'm always open to new opportunities and collaborations. Feel free to reach out to me
+            via email or any of the following social media handles.
+        </p>
+        <br />
+        <div class="w-fit flex gap-4 mt-6 flex-wrap">
+            <a
+                href="mailto:as1100k@outlook.in"
+                class="border-1 rounded-md px-4 py-2 flex items-center gap-2 mt-4 w-fit"
+                type="button"
+            >
+                <Image src="/assets/icons/mail.svg" width={16} height={16} alt="Mail Icon" />
+                Mail
+            </a>
+            <a
+                href="https://linkedin.com/in/as1100k"
+                class="border-1 rounded-md px-4 py-2 flex items-center gap-2 mt-4 w-fit"
+                type="button"
+            >
+                <Image src="/assets/icons/linkedin.svg" width={16} height={16} alt="Mail Icon" />
+                LinkedIn
+            </a>
+            <a
+                href="https://discordapp.com/users/1127473934384762940"
+                class="border-1 rounded-md px-4 py-2 flex items-center gap-2 mt-4 w-fit"
+                type="button"
+            >
+                <Image
+                    src="/assets/icons/discord-mark-black.svg"
+                    width={16}
+                    height={16}
+                    alt="Mail Icon"
+                />
+                Discord
+            </a>
+        </div>
+    </div>
+</Main>

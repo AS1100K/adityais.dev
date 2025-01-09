@@ -12,6 +12,9 @@ export default {
 			width: {
 				featured_project: "calc(100% - 2rem)",
 			},
+			minHeight: {
+				full_page: "calc(100vh - 20rem)",
+			},
 			colors: {
 				primary: "#56ba63",
 				secondary: "#9cdda4",
@@ -29,7 +32,6 @@ export default {
 				semibold: 600,
 				medium: 500,
 				regular: 400,
-
 			},
 		},
 	},
