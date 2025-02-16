@@ -3,6 +3,12 @@ use serde::{
     Deserialize, Serialize,
 };
 
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub struct SearchRes {
+    pub total_count: u32,
+    pub items: Vec<PullRequest>,
+}
+
 #[derive(Debug, Serialize, PartialEq)]
 pub struct PullRequest {
     pub html_url: String,
