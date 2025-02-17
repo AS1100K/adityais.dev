@@ -5,27 +5,6 @@ use tool_contributing::*;
 #[test]
 fn test_contributing() {
     let json = serde_json::json!({
-        "html_url": "https://github.com/AS1100K/cargo-wiki/pull/2",
-        "title": "Add Links for types",
-        "number": 2,
-        "updated_at": "2025-02-15T15:03:59Z"
-    });
-
-    let pull_request: PullRequest = serde_json::from_value(json).unwrap();
-    let expected = PullRequest {
-        html_url: "https://github.com/AS1100K/cargo-wiki/pull/2".into(),
-        title: "Add Links for types".into(),
-        number: 2,
-        updated_at: chrono::DateTime::from_str("2025-02-15T15:03:59Z").unwrap(),
-        owner_repo: ("AS1100K".into(), "cargo-wiki".into()),
-    };
-
-    assert_eq!(pull_request, expected);
-}
-
-#[test]
-fn test_contributing_with_extra_fields() {
-    let json = serde_json::json!({
         "url": "https://api.github.com/repos/AS1100K/cargo-wiki/issues/2",
         "repository_url": "https://api.github.com/repos/AS1100K/cargo-wiki",
         "labels_url": "https://api.github.com/repos/AS1100K/cargo-wiki/issues/2/labels{/name}",
@@ -108,13 +87,14 @@ fn test_contributing_with_extra_fields() {
         number: 2,
         updated_at: chrono::DateTime::from_str("2025-02-15T15:03:59Z").unwrap(),
         owner_repo: ("AS1100K".into(), "cargo-wiki".into()),
+        state: PullRequestState::Merged,
     };
 
     assert_eq!(pull_request, expected);
 }
 
 #[test]
-fn test_search_res_with_extra_fields() {
+fn test_search_res() {
     let json = serde_json::json!({
         "total_count": 71,
         "incomplete_results": false,
@@ -248,8 +228,7 @@ fn test_search_res_with_extra_fields() {
                     "url": "https://api.github.com/repos/rs-workspace/release-butler/pulls/8",
                     "html_url": "https://github.com/rs-workspace/release-butler/pull/8",
                     "diff_url": "https://github.com/rs-workspace/release-butler/pull/8.diff",
-                    "patch_url": "https://github.com/rs-workspace/release-butler/pull/8.patch",
-                    "merged_at": "2025-02-12T14:39:18Z"
+                    "patch_url": "https://github.com/rs-workspace/release-butler/pull/8.patch"
                 },
                 "body": null,
                 "reactions": {
@@ -282,6 +261,7 @@ fn test_search_res_with_extra_fields() {
                 number: 2,
                 updated_at: chrono::DateTime::from_str("2025-02-15T15:03:59Z").unwrap(),
                 owner_repo: ("AS1100K".into(), "cargo-wiki".into()),
+                state: PullRequestState::Merged,
             },
             PullRequest {
                 html_url: "https://github.com/rs-workspace/release-butler/pull/8".into(),
@@ -289,6 +269,7 @@ fn test_search_res_with_extra_fields() {
                 number: 8,
                 updated_at: chrono::DateTime::from_str("2025-02-12T14:39:21Z").unwrap(),
                 owner_repo: ("rs-workspace".into(), "release-butler".into()),
+                state: PullRequestState::Closed,
             },
         ],
     };

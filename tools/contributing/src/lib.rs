@@ -1,21 +1,35 @@
 use serde::{
     de::{self, Visitor},
-    Deserialize, Serialize,
+    Deserialize,
 };
 
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize, PartialEq)]
 pub struct SearchRes {
     pub total_count: u32,
     pub items: Vec<PullRequest>,
 }
 
-#[derive(Debug, Serialize, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct PullRequest {
     pub html_url: String,
     pub title: String,
     pub number: usize,
     pub owner_repo: (String, String),
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub state: PullRequestState,
+}
+
+#[derive(Debug, PartialEq)]
+pub enum PullRequestState {
+    Open,
+    Draft,
+    Closed,
+    Merged,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+struct InnerPullRequest {
+    merged_at: Option<String>,
 }
 
 impl<'de> Deserialize<'de> for PullRequest {
@@ -30,6 +44,9 @@ impl<'de> Deserialize<'de> for PullRequest {
             Title,
             Number,
             UpdatedAt,
+            State,
+            PullRequest,
+            Draft,
             #[serde(other)]
             Ignore,
         }
@@ -51,6 +68,9 @@ impl<'de> Deserialize<'de> for PullRequest {
                 let mut title = None;
                 let mut number = None;
                 let mut updated_at = None;
+                let mut draft = None;
+                let mut inner_pull_request = None;
+                let mut state = None;
 
                 while let Some(key) = map.next_key()? {
                     match key {
@@ -82,6 +102,27 @@ impl<'de> Deserialize<'de> for PullRequest {
 
                             updated_at = Some(map.next_value()?)
                         }
+                        Field::Draft => {
+                            if draft.is_some() {
+                                return Err(de::Error::duplicate_field("draft"));
+                            }
+
+                            draft = Some(map.next_value()?)
+                        }
+                        Field::State => {
+                            if state.is_some() {
+                                return Err(de::Error::duplicate_field("state"));
+                            }
+
+                            state = Some(map.next_value()?)
+                        }
+                        Field::PullRequest => {
+                            if inner_pull_request.is_some() {
+                                return Err(de::Error::duplicate_field("pull_request"));
+                            }
+
+                            inner_pull_request = Some(map.next_value()?)
+                        }
                         Field::Ignore => {
                             let _ = map.next_value::<serde::de::IgnoredAny>()?;
                         }
@@ -106,12 +147,34 @@ impl<'de> Deserialize<'de> for PullRequest {
                 let updated_at =
                     updated_at.ok_or_else(|| de::Error::missing_field("updated_at"))?;
 
+                let draft: bool = draft.ok_or_else(|| de::Error::missing_field("draaft"))?;
+                let state: String = state.ok_or_else(|| de::Error::missing_field("state"))?;
+                let inner_pull_request: InnerPullRequest =
+                    inner_pull_request.ok_or_else(|| de::Error::missing_field("pull_request"))?;
+
+                let our_state = if draft {
+                    PullRequestState::Draft
+                } else {
+                    match state.as_str() {
+                        "open" => PullRequestState::Open,
+                        "closed" => {
+                            if inner_pull_request.merged_at.is_some() {
+                                PullRequestState::Merged
+                            } else {
+                                PullRequestState::Closed
+                            }
+                        }
+                        _ => PullRequestState::Open,
+                    }
+                };
+
                 Ok(PullRequest {
                     html_url,
                     owner_repo,
                     title,
                     number,
                     updated_at,
+                    state: our_state,
                 })
             }
         }
