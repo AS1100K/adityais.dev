@@ -17,3 +17,6 @@ target/
 #.idea/
 
 Cargo.lock
+
+# Generated files
+prs.json

@@ -1,7 +1,8 @@
 use serde::{
     de::{self, Visitor},
-    Deserialize,
+    Deserialize, Serialize,
 };
+use std::fs;
 
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct SearchRes {
@@ -9,7 +10,7 @@ pub struct SearchRes {
     pub items: Vec<PullRequest>,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize)]
 pub struct PullRequest {
     pub html_url: String,
     pub title: String,
@@ -19,17 +20,12 @@ pub struct PullRequest {
     pub state: PullRequestState,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize)]
 pub enum PullRequestState {
     Open,
     Draft,
     Closed,
     Merged,
-}
-
-#[derive(Debug, Deserialize, PartialEq)]
-struct InnerPullRequest {
-    merged_at: Option<String>,
 }
 
 impl<'de> Deserialize<'de> for PullRequest {
@@ -64,6 +60,11 @@ impl<'de> Deserialize<'de> for PullRequest {
             where
                 A: serde::de::MapAccess<'de>,
             {
+                #[derive(Debug, Deserialize, PartialEq)]
+                struct InnerPullRequest {
+                    merged_at: Option<String>,
+                }
+
                 let mut html_url = None;
                 let mut title = None;
                 let mut number = None;
@@ -180,5 +181,117 @@ impl<'de> Deserialize<'de> for PullRequest {
         }
 
         deserializer.deserialize_map(PullRequestVisitor)
+    }
+}
+
+pub struct GitHubClient {
+    token: String,
+    user: String,
+    client: reqwest::Client,
+    prs: Vec<PullRequest>,
+}
+
+impl GitHubClient {
+    const MAX_RETRIES: u8 = 3;
+
+    const SEARCH_ISSUES: &str = "https://api.github.com/search/issues";
+
+    const FILE_NAME: &str = "prs.json";
+
+    const ACCEPT_HEADER: &str = "application/vnd.github+json";
+    const GITHUB_API_VERSION_HEADER: &str = "2022-11-28";
+    const USER_AGENT_HEADER: &str = "adityais.dev-tools";
+
+    pub fn new(token: String, user: String) -> Self {
+        // let prs = Self::read_files();
+        Self {
+            token,
+            user,
+            client: reqwest::Client::new(),
+            prs: Vec::new(),
+        }
+    }
+
+    pub async fn auto(&mut self) {
+        let mut current_retry_number: u8 = 0;
+
+        let url = format!("{}?q=type:pr+author:{}", Self::SEARCH_ISSUES, self.user);
+        let mut current_page = 1;
+        let mut total_page = 1;
+
+        while current_retry_number <= Self::MAX_RETRIES && current_page <= total_page {
+            let current_page_string = current_page.to_string();
+            let params = [
+                ("sort", "updated"),
+                ("per_page", "50"),
+                ("page", current_page_string.as_str()),
+            ];
+
+            let res = self
+                .client
+                .get(&url)
+                .query(&params)
+                .bearer_auth(&self.token)
+                .header("Accept", Self::ACCEPT_HEADER)
+                .header("X-GitHub-Api-Version", Self::GITHUB_API_VERSION_HEADER)
+                .header("User-Agent", Self::USER_AGENT_HEADER)
+                .send()
+                .await
+                .expect("Failed to construct request");
+
+            let res = match res.status().as_u16() {
+                403 | 422 => {
+                    panic!(
+                        "Got Status Code: {}. Response: {:?}",
+                        res.status(),
+                        res.bytes()
+                            .await
+                            .expect("Failed to convert error response into bytes")
+                    )
+                }
+                200 | 201 => {
+                    let bytes = res
+                        .bytes()
+                        .await
+                        .expect("Failed to convert response to bytes");
+
+                    let res: SearchRes = serde_json::from_slice(&bytes)
+                        .expect("Failed to deserialize the body response");
+                    res
+                }
+                _ => {
+                    current_retry_number += 1;
+
+                    println!(
+                        "Failed to fetch response from the search API. Retrying... Error: {:?}",
+                        res.bytes()
+                            .await
+                            .expect("Failed to convert error response into bytes")
+                    );
+                    continue;
+                }
+            };
+
+            // Reset retry counter
+            current_retry_number = 0;
+            current_page += 1;
+
+            // Calculate Total Pages
+            total_page = (res.total_count as f64 / 50.0).ceil() as u32;
+
+            // Process Pull Requests
+            for pr in res.items {
+                if PullRequestState::Closed == pr.state {
+                    continue;
+                }
+
+                self.prs.push(pr);
+            }
+        }
+    }
+
+    pub fn save(self) {
+        let json = serde_json::to_string(&self.prs).expect("Failed to convert the PRs in json");
+        fs::write(Self::FILE_NAME, json).expect("Failed to write to the file");
     }
 }
