@@ -1,0 +1,10 @@
+---
+import Main from "@layout/main.astro";
+
+import all_prs from "../../prs.json";
+import stars from "../../stars.json";
+---
+
+<Main title="Open Source Contributions of Aditya Kumar">
+    {all_prs.map((pr) => <p>{pr.title}</p>)}
+</Main>
