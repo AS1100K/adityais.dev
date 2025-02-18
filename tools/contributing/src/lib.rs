@@ -2,7 +2,11 @@ use serde::{
     de::{self, Visitor},
     Deserialize, Serialize,
 };
-use std::fs;
+use std::{
+    collections::{HashMap, HashSet},
+    fs,
+};
+use tool_stargazer::RepoInfo;
 
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct SearchRes {
@@ -10,7 +14,7 @@ pub struct SearchRes {
     pub items: Vec<PullRequest>,
 }
 
-#[derive(Debug, PartialEq, Serialize)]
+#[derive(Debug, PartialEq, Serialize, Clone)]
 pub struct PullRequest {
     pub html_url: String,
     pub title: String,
@@ -20,7 +24,7 @@ pub struct PullRequest {
     pub state: PullRequestState,
 }
 
-#[derive(Debug, PartialEq, Serialize)]
+#[derive(Debug, PartialEq, Serialize, Clone)]
 pub enum PullRequestState {
     Open,
     Draft,
@@ -189,6 +193,8 @@ pub struct GitHubClient {
     user: String,
     client: reqwest::Client,
     prs: Vec<PullRequest>,
+    repo_info: HashSet<RepoInfo>,
+    star_count: tool_stargazer::RepoStarCount,
 }
 
 impl GitHubClient {
@@ -196,19 +202,21 @@ impl GitHubClient {
 
     const SEARCH_ISSUES: &str = "https://api.github.com/search/issues";
 
-    const FILE_NAME: &str = "prs.json";
+    const PR_FILE_NAME: &str = "prs.json";
+    const STARS_FILE_NAME: &str = "stars.json";
 
     const ACCEPT_HEADER: &str = "application/vnd.github+json";
     const GITHUB_API_VERSION_HEADER: &str = "2022-11-28";
     const USER_AGENT_HEADER: &str = "adityais.dev-tools";
 
     pub fn new(token: String, user: String) -> Self {
-        // let prs = Self::read_files();
         Self {
             token,
             user,
             client: reqwest::Client::new(),
             prs: Vec::new(),
+            repo_info: HashSet::new(),
+            star_count: HashMap::new(),
         }
     }
 
@@ -262,7 +270,7 @@ impl GitHubClient {
                 _ => {
                     current_retry_number += 1;
 
-                    println!(
+                    eprintln!(
                         "Failed to fetch response from the search API. Retrying... Error: {:?}",
                         res.bytes()
                             .await
@@ -285,13 +293,26 @@ impl GitHubClient {
                     continue;
                 }
 
-                self.prs.push(pr);
+                self.prs.push(pr.clone());
+                let repo_info = RepoInfo::new(pr.owner_repo.0, pr.owner_repo.1);
+                self.repo_info.insert(repo_info);
             }
         }
+
+        // Process stars
+        let mut star_count =
+            tool_stargazer::GitHubStargazerCount::new(self.token.clone(), &self.repo_info);
+        star_count.auto().await;
+
+        self.star_count = star_count.star_count;
     }
 
     pub fn save(self) {
         let json = serde_json::to_string(&self.prs).expect("Failed to convert the PRs in json");
-        fs::write(Self::FILE_NAME, json).expect("Failed to write to the file");
+        fs::write(Self::PR_FILE_NAME, json).expect("Failed to write to the file");
+
+        let json =
+            serde_json::to_string(&self.star_count).expect("Failed to convert the stars in json");
+        fs::write(Self::STARS_FILE_NAME, json).expect("Failed to write to the file");
     }
 }

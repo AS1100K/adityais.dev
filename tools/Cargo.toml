@@ -1,6 +1,7 @@
 [workspace]
 members = [
-    "contributing"
+    "contributing", 
+    "stargazer"
 ]
 
 resolver = "2"
@@ -19,3 +20,5 @@ serde_json = "1"
 chrono = "0.4"
 reqwest = "0.12"
 tokio = "1"
+tool-contributing = { path = "./contributing" }
+tool-stargazer = { path = "./stargazer" }
