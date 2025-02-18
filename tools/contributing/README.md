@@ -21,7 +21,8 @@ _Example_
             "adityais.dev"
         ],
         "updated_at": "2025-02-17T16:06:07Z",
-        "state": "Open"
+        "state": "Open",
+        "owner_avatar_url": "https://avatars.githubusercontent.com/u/117935160?v=4"
     }
 ]
 ```
@@ -38,6 +39,7 @@ _Types_
     - `Draft`: The PR is marked as draft
     - `Closed`: The PR is closed with unmerged commits
     - `Merged`: The PR is merged
+- `owner_avatar_url`: Repository Owner's GitHub avatar. For resizing pass `s={width}` param
 
 ### `stars.json`
 

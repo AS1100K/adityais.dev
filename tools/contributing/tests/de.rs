@@ -88,6 +88,7 @@ fn test_contributing() {
         updated_at: chrono::DateTime::from_str("2025-02-15T15:03:59Z").unwrap(),
         owner_repo: ("AS1100K".into(), "cargo-wiki".into()),
         state: PullRequestState::Merged,
+        owner_avatar_url: "https://avatars.githubusercontent.com/u/117935160?v=4".into(),
     };
 
     assert_eq!(pull_request, expected);
@@ -262,6 +263,7 @@ fn test_search_res() {
                 updated_at: chrono::DateTime::from_str("2025-02-15T15:03:59Z").unwrap(),
                 owner_repo: ("AS1100K".into(), "cargo-wiki".into()),
                 state: PullRequestState::Merged,
+                owner_avatar_url: "https://avatars.githubusercontent.com/u/117935160?v=4".into(),
             },
             PullRequest {
                 html_url: "https://github.com/rs-workspace/release-butler/pull/8".into(),
@@ -270,6 +272,7 @@ fn test_search_res() {
                 updated_at: chrono::DateTime::from_str("2025-02-12T14:39:21Z").unwrap(),
                 owner_repo: ("rs-workspace".into(), "release-butler".into()),
                 state: PullRequestState::Closed,
+                owner_avatar_url: "https://avatars.githubusercontent.com/u/117935160?v=4".into(),
             },
         ],
     };

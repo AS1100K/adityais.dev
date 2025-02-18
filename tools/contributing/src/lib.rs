@@ -22,6 +22,7 @@ pub struct PullRequest {
     pub owner_repo: (String, String),
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
     pub state: PullRequestState,
+    pub owner_avatar_url: String,
 }
 
 #[derive(Debug, PartialEq, Serialize, Clone)]
@@ -44,6 +45,8 @@ impl<'de> Deserialize<'de> for PullRequest {
             Title,
             Number,
             UpdatedAt,
+            #[serde(rename = "user")]
+            OwnerAvatarURL,
             State,
             PullRequest,
             Draft,
@@ -64,15 +67,21 @@ impl<'de> Deserialize<'de> for PullRequest {
             where
                 A: serde::de::MapAccess<'de>,
             {
-                #[derive(Debug, Deserialize, PartialEq)]
+                #[derive(Deserialize, PartialEq)]
                 struct InnerPullRequest {
                     merged_at: Option<String>,
+                }
+
+                #[derive(Deserialize)]
+                struct InnerUser {
+                    avatar_url: String,
                 }
 
                 let mut html_url = None;
                 let mut title = None;
                 let mut number = None;
                 let mut updated_at = None;
+                let mut avatar_url = None;
                 let mut draft = None;
                 let mut inner_pull_request = None;
                 let mut state = None;
@@ -106,6 +115,13 @@ impl<'de> Deserialize<'de> for PullRequest {
                             }
 
                             updated_at = Some(map.next_value()?)
+                        }
+                        Field::OwnerAvatarURL => {
+                            if avatar_url.is_some() {
+                                return Err(de::Error::duplicate_field("user"));
+                            }
+
+                            avatar_url = Some(map.next_value()?)
                         }
                         Field::Draft => {
                             if draft.is_some() {
@@ -152,6 +168,10 @@ impl<'de> Deserialize<'de> for PullRequest {
                 let updated_at =
                     updated_at.ok_or_else(|| de::Error::missing_field("updated_at"))?;
 
+                let avatar_url: InnerUser =
+                    avatar_url.ok_or_else(|| de::Error::missing_field("user"))?;
+                let avatar_url = avatar_url.avatar_url;
+
                 let draft: bool = draft.ok_or_else(|| de::Error::missing_field("draaft"))?;
                 let state: String = state.ok_or_else(|| de::Error::missing_field("state"))?;
                 let inner_pull_request: InnerPullRequest =
@@ -179,6 +199,7 @@ impl<'de> Deserialize<'de> for PullRequest {
                     title,
                     number,
                     updated_at,
+                    owner_avatar_url: avatar_url,
                     state: our_state,
                 })
             }
