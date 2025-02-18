@@ -1,0 +1,17 @@
+[package]
+name = "tool-contributing"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+chrono = { workspace = true, features = ["serde"] }
+reqwest = { workspace = true }
+tokio = { workspace = true, features = ["rt", "macros", "rt-multi-thread"] }
+tool-stargazer = { workspace = true }
