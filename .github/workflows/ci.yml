@@ -44,7 +44,7 @@ jobs:
       run: |
         cd tools
         export TOOLS_CONTRIBUTING_TOKEN="${{steps.app-token.outputs.token}}"
-        cargo run -p tools-contributing
+        cargo run -p tool-contributing
         mv prs.json ../
         mv stars.json ../
         cd ../
