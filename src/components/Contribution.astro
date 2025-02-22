@@ -33,7 +33,7 @@ switch (props.data.state) {
 ---
 
 <div class="bg-[#EFF6F0] my-5 rounded-xl p-5 flex justify-start items-center gap-5">
-    <img
+    <Image
         src={`${
             props.repo_info?.[`${props.data.owner_repo[0]}/${props.data.owner_repo[1]}`]?.[
                 "avatar_url"
@@ -68,19 +68,36 @@ switch (props.data.state) {
             <a href={props.data.html_url} class="hover:text-text">#{props.data.number}</a>
         </div>
         <div class="flex justify-between items-center w-full">
-            <p>
-                <a
-                    href=`https://github.com/${props.data.owner_repo[0]}`
-                    class="text-[#646464] hover:text-[#646464] hover:underline cursor-pointer"
-                    >{props.data.owner_repo[0]}</a
-                >
-                <span class="text-[#646464]">/</span>
-                <a
-                    href=`https://github.com/${props.data.owner_repo[0]}/${props.data.owner_repo[1]}`
-                    class="text-black hover:text-black hover:underline cursor-pointer"
-                    >{props.data.owner_repo[1]}</a
-                >
-            </p>
+            <div class="flex gap-3 items-center">
+                <p>
+                    <a
+                        href=`https://github.com/${props.data.owner_repo[0]}`
+                        class="text-[#646464] hover:text-[#646464] hover:underline cursor-pointer"
+                        >{props.data.owner_repo[0]}</a
+                    >
+                    <span class="text-[#646464]">/</span>
+                    <a
+                        href=`https://github.com/${props.data.owner_repo[0]}/${props.data.owner_repo[1]}`
+                        class="text-black hover:text-black hover:underline cursor-pointer"
+                        >{props.data.owner_repo[1]}</a
+                    >
+                </p>
+                <div class="flex justify-start items-center gap-1">
+                    <Image
+                        src="/assets/icons/star.svg"
+                        width={24}
+                        height={24}
+                        alt="Stars of repository"
+                    />
+                    <p class="m-0">
+                        {
+                            props.repo_info?.[
+                                `${props.data.owner_repo[0]}/${props.data.owner_repo[1]}`
+                            ]?.["stars"]
+                        }
+                    </p>
+                </div>
+            </div>
             <p class="text-[#646464]">
                 {
                     (() => {
