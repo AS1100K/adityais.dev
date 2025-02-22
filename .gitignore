@@ -30,3 +30,7 @@ pnpm-debug.log*
 .wrangler
 wrangler.toml
 worker-configuration.d.ts
+
+# Tools Generated files
+prs.json
+repo-info.json

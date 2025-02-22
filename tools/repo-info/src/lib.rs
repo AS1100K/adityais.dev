@@ -6,21 +6,21 @@ use std::{
 };
 
 #[derive(Debug, Hash, Eq, PartialEq, Clone)]
-pub struct RepoInfo(String, String);
+pub struct RepoName(String, String);
 
-impl RepoInfo {
+impl RepoName {
     pub fn new<O: AsRef<str>, R: AsRef<str>>(owner: O, repo: R) -> Self {
         Self(String::from(owner.as_ref()), String::from(repo.as_ref()))
     }
 }
 
-impl Display for RepoInfo {
+impl Display for RepoName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}/{}", self.0, self.1)
     }
 }
 
-impl Serialize for RepoInfo {
+impl Serialize for RepoName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
@@ -29,14 +29,20 @@ impl Serialize for RepoInfo {
     }
 }
 
-pub type RepoStarCount = HashMap<RepoInfo, usize>;
+#[derive(Debug, Hash, PartialEq, Eq, Clone, Serialize)]
+pub struct RepoInfo {
+    pub stars: usize,
+    pub avatar_url: String,
+}
+
+pub type RepoInfoMap = HashMap<RepoName, RepoInfo>;
 
 #[derive(Debug)]
 pub struct GitHubStargazerCount<'a> {
     client: reqwest::Client,
-    repos: &'a HashSet<RepoInfo>,
+    repos: &'a HashSet<RepoName>,
     token: String,
-    pub star_count: RepoStarCount,
+    pub repo_info: RepoInfoMap,
 }
 
 impl<'a> GitHubStargazerCount<'a> {
@@ -44,13 +50,13 @@ impl<'a> GitHubStargazerCount<'a> {
 
     const GET_REPO: &'a str = "https://api.github.com/repos";
 
-    const FILE_NAME: &'a str = "stargazer-count.json";
+    const FILE_NAME: &'a str = "repo-info.json";
 
     const ACCEPT_HEADER: &'a str = "application/vnd.github+json";
     const GITHUB_API_VERSION_HEADER: &'a str = "2022-11-28";
     const USER_AGENT_HEADER: &'a str = "adityais.dev-tools";
 
-    pub fn new(token: String, repos: &'a HashSet<RepoInfo>) -> Self {
+    pub fn new(token: String, repos: &'a HashSet<RepoName>) -> Self {
         let client = reqwest::Client::new();
         let star_count = HashMap::new();
 
@@ -58,7 +64,7 @@ impl<'a> GitHubStargazerCount<'a> {
             client,
             repos,
             token,
-            star_count,
+            repo_info: star_count,
         }
     }
 
@@ -66,6 +72,12 @@ impl<'a> GitHubStargazerCount<'a> {
         #[derive(Deserialize)]
         struct GetRepoRes {
             stargazers_count: usize,
+            owner: Owner,
+        }
+
+        #[derive(Deserialize)]
+        struct Owner {
+            avatar_url: String,
         }
 
         for repo in self.repos {
@@ -126,8 +138,11 @@ impl<'a> GitHubStargazerCount<'a> {
                     }
                 };
 
-                self.star_count
-                    .insert(repo.to_owned(), res.stargazers_count);
+                let repo_info = RepoInfo {
+                    stars: res.stargazers_count,
+                    avatar_url: res.owner.avatar_url,
+                };
+                self.repo_info.insert(repo.to_owned(), repo_info);
 
                 break;
             }
@@ -136,7 +151,7 @@ impl<'a> GitHubStargazerCount<'a> {
 
     pub fn save(self) {
         let json =
-            serde_json::to_string(&self.star_count).expect("Failed to convert start count in json");
+            serde_json::to_string(&self.repo_info).expect("Failed to convert start count in json");
         fs::write(Self::FILE_NAME, json).expect("Failed to write to the file");
     }
 }

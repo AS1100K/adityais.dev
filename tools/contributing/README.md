@@ -39,16 +39,19 @@ _Types_
     - `Draft`: The PR is marked as draft
     - `Closed`: The PR is closed with unmerged commits
     - `Merged`: The PR is merged
-- `owner_avatar_url`: Repository Owner's GitHub avatar. For resizing pass `s={width}` param
+- `owner_avatar_url`: PR Author's GitHub Avatar. For resizing pass `s={width}` param
 
-### `stars.json`
+### `repo-info.json`
 
 _Example_
 
 ```json
 {
-    "AS1100K/cargo-wiki": 3
+    "AS1100K/cargo-wiki": {
+        "stars": 3,
+        "avatar_url": "https://avatars.githubusercontent.com/u/117935160?v=4"
+    }
 }
 ```
 
-_Field Syntax: `<REPO_OWNER>/<REPO_NAME`_
+_Field Syntax: `<REPO_OWNER>/<REPO_NAME>`_
