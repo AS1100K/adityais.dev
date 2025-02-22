@@ -19,6 +19,10 @@ jobs:
         with:
           app-id: ${{vars.CHORE_APP_ID}}
           private-key: ${{secrets.CHORE_ACCOUNT_TOKEN}}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            adityais.dev
+            adityais.dev-content
 
       - name: Update submodules
         run: |
