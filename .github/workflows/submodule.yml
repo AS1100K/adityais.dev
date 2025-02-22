@@ -1,38 +1,36 @@
-name: Auto Update Submodule
+name: Update Submodules Daily
 
 on:
   schedule:
-    - cron: '0 12 * * *' # Runs at 5:30 PM IST (12:00 PM UTC)
-  workflow_dispatch:
+    # Runs at 5:30 PM IST (12:00 UTC)
+    - cron: '30 12 * * *'
 
 jobs:
-  update-submodule:
+  update:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive # Checkout submodules
-        token: ${{ secrets.REPOSITORY_PAT }}
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
-    - name: Git config
-      run: |
-        git config --global user.name "adityais.dev-submodule-updater[bot]"
-        git config --global user.email "adityais.dev-submodule-updater[bot]@users.noreply.github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+      - name: Generate GitHub App token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{vars.CHORE_APP_ID}}
+          private-key: ${{secrets.CHORE_ACCOUNT_TOKEN}}
 
-    - name: Git Submodule Update
-      run: |
-        git pull --recurse-submodules
-        git submodule update --remote --recursive
-
-    - name: Commit changes
-      run: |
-        git add .
-        if ! git diff-index --quiet HEAD; then
-          git commit -m "chore: Update submodule [no ci]"
-          git push
-        else
-          echo "No changes to commit"
-        fi
+      - name: Update submodules
+        run: |
+          git config --global user.name 'Chore Bot'
+          git config --global user.email '${{vars.CHORE_APP_ID}}+as1100k-chore[bot]@users.noreply.github.com'
+          git submodule update --remote --recursive
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+            git commit -m "chore: update submodules [no ci]"
+            git push
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}

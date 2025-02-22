@@ -19,13 +19,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Sleep for 5 seconds
-      run: sleep 5
+    - uses: actions/create-github-app-token@v1
+      id: app-token
+      with:
+        app-id: ${{vars.CHORE_APP_ID}}
+        private-key: ${{secrets.CHORE_ACCOUNT_TOKEN}}
+
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         submodules: recursive # Checkout submodules
-        token: ${{ secrets.REPOSITORY_PAT }}
+        token: ${{ steps.app-token.outputs.token }}
     
     - name: Update Submodule
       run: |
@@ -35,7 +39,7 @@ jobs:
     - name: Run Tools
       run: |
         cd tools
-        export TOOLS_CONTRIBUTING_TOKEN="${{secrets.CHORE_ACCOUNT_TOKEN}}"
+        export TOOLS_CONTRIBUTING_TOKEN="${{steps.app-token.outputs.token}}"
         cargo run -p tools-contributing
         mv prs.json ../
         mv stars.json ../
@@ -50,7 +54,7 @@ jobs:
       run: npm install
 
     - name: Set ENV variable
-      run: echo "GITHUB_API_KEY=${{ secrets.ENV_GITHUB_API_KEY }}" >> $GITHUB_ENV
+      run: echo "GITHUB_API_KEY=${{ steps.app-token.outputs.token }}" >> $GITHUB_ENV
       
     - name: Build Astro app
       run: npm run build
