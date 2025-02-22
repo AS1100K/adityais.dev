@@ -11,6 +11,7 @@ interface Props {
         state: string;
         owner_avatar_url: string;
     };
+    repo_info: any;
 }
 
 const props = Astro.props;
@@ -32,11 +33,15 @@ switch (props.data.state) {
 ---
 
 <div class="bg-[#EFF6F0] my-5 rounded-xl p-5 flex justify-start items-center gap-5">
-    <Image
-        src=`${props.data.owner_avatar_url}&s=40`
+    <img
+        src={`${
+            props.repo_info?.[`${props.data.owner_repo[0]}/${props.data.owner_repo[1]}`]?.[
+                "avatar_url"
+            ] ?? props.data.owner_avatar_url
+        }&s=40`}
         width={40}
         height={40}
-        alt=`${props.data.owner_repo[0]}'s github avatar'`
+        alt={`${props.data.owner_repo[0]}'s github avatar'`}
         class="rounded-[100%]"
     />
     <div class="w-full">

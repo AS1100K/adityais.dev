@@ -2,7 +2,7 @@
 import Main from "@layout/main.astro";
 
 import all_prs from "../../prs.json";
-import stars from "../../stars.json";
+import repo_info from "../../repo-info.json";
 import SocialButtons from "src/components/SocialButtons.astro";
 import Contribution from "src/components/Contribution.astro";
 ---
@@ -19,5 +19,5 @@ import Contribution from "src/components/Contribution.astro";
         </p>
         <SocialButtons />
     </div>
-    {all_prs.map((pr) => <Contribution data={pr} />)}
+    {all_prs.map((pr) => <Contribution data={pr} repo_info={repo_info} />)}
 </Main>
