@@ -32,6 +32,15 @@ jobs:
         git pull --recurse-submodules
         git submodule update --remote --recursive
 
+    - name: Run Tools
+      run: |
+        cd tools
+        export TOOLS_CONTRIBUTING_TOKEN="${{secrets.CHORE_ACCOUNT_TOKEN}}"
+        cargo run -p tools-contributing
+        mv prs.json ../
+        mv stars.json ../
+        cd ../
+
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
