@@ -1,0 +1,110 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    data: {
+        html_url: string;
+        title: string;
+        number: number;
+        owner_repo: string[];
+        updated_at: string;
+        state: string;
+        owner_avatar_url: string;
+    };
+    repo_info: any;
+}
+
+const props = Astro.props;
+
+let pull_request_color = "";
+switch (props.data.state) {
+    case "Merged":
+        pull_request_color = "#8957e5";
+        break;
+
+    case "Draft":
+        pull_request_color = "#656c76";
+        break;
+
+    default:
+        pull_request_color = "#238636";
+        break;
+}
+---
+
+<div class="bg-[#EFF6F0] my-5 rounded-xl p-5 flex justify-start items-center gap-5">
+    <img
+        src={`${
+            props.repo_info?.[`${props.data.owner_repo[0]}/${props.data.owner_repo[1]}`]?.[
+                "avatar_url"
+            ] ?? props.data.owner_avatar_url
+        }&s=40`}
+        width={40}
+        height={40}
+        alt={`${props.data.owner_repo[0]}'s github avatar'`}
+        class="rounded-[100%]"
+    />
+    <div class="w-full">
+        <div class="flex justify-between items-center pb-2">
+            <div class="flex gap-2 items-center">
+                <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M8.07387 3.45737L10.7699 0.761347C10.947 0.584167 11.25 0.709652 11.25 0.96022V6.35222C11.25 6.60279 10.947 6.72828 10.7699 6.5511L8.07387 3.85512C7.96403 3.74528 7.96403 3.56721 8.07387 3.45737ZM3.65625 2.8125C3.19026 2.8125 2.8125 3.19026 2.8125 3.65625C2.8125 4.12224 3.19026 4.5 3.65625 4.5C4.12224 4.5 4.5 4.12224 4.5 3.65625C4.5 3.19026 4.12224 2.8125 3.65625 2.8125ZM1.125 3.65625C1.125 2.25828 2.25828 1.125 3.65625 1.125C5.05422 1.125 6.1875 2.25828 6.1875 3.65625C6.1875 4.75837 5.48313 5.69598 4.5 6.04347V11.9565C5.48313 12.304 6.1875 13.2416 6.1875 14.3438C6.1875 15.7417 5.05422 16.875 3.65625 16.875C2.25828 16.875 1.125 15.7417 1.125 14.3438C1.125 13.2416 1.82937 12.304 2.8125 11.9565V6.04347C1.82937 5.69598 1.125 4.75837 1.125 3.65625ZM12.375 2.8125H11.25V4.5H12.375C12.9963 4.5 13.5 5.00368 13.5 5.625V11.9565C12.5169 12.304 11.8125 13.2416 11.8125 14.3438C11.8125 15.7417 12.9458 16.875 14.3438 16.875C15.7417 16.875 16.875 15.7417 16.875 14.3438C16.875 13.2416 16.1706 12.304 15.1875 11.9565V5.625C15.1875 4.0717 13.9283 2.8125 12.375 2.8125ZM2.8125 14.3438C2.8125 13.8778 3.19026 13.5 3.65625 13.5C4.12224 13.5 4.5 13.8778 4.5 14.3438C4.5 14.8097 4.12224 15.1875 3.65625 15.1875C3.19026 15.1875 2.8125 14.8097 2.8125 14.3438ZM13.5 14.3438C13.5 13.8778 13.8778 13.5 14.3438 13.5C14.8097 13.5 15.1875 13.8778 15.1875 14.3438C15.1875 14.8097 14.8097 15.1875 14.3438 15.1875C13.8778 15.1875 13.5 14.8097 13.5 14.3438Z"
+                        fill={pull_request_color}></path>
+                </svg>
+
+                <p class="font-bold truncate">
+                    {props.data.title}
+                </p>
+            </div>
+            <a href={props.data.html_url} class="hover:text-text">#{props.data.number}</a>
+        </div>
+        <div class="flex justify-between items-center w-full">
+            <p>
+                <a
+                    href=`https://github.com/${props.data.owner_repo[0]}`
+                    class="text-[#646464] hover:text-[#646464] hover:underline cursor-pointer"
+                    >{props.data.owner_repo[0]}</a
+                >
+                <span class="text-[#646464]">/</span>
+                <a
+                    href=`https://github.com/${props.data.owner_repo[0]}/${props.data.owner_repo[1]}`
+                    class="text-black hover:text-black hover:underline cursor-pointer"
+                    >{props.data.owner_repo[1]}</a
+                >
+            </p>
+            <p class="text-[#646464]">
+                {
+                    (() => {
+                        const date = new Date(props.data.updated_at);
+                        const now = new Date();
+                        const diff = now.getTime() - date.getTime();
+                        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+                        if (days < 1) return "today";
+                        if (days === 1) return "yesterday";
+                        if (days < 7) return `${days} days ago`;
+                        if (days < 14) return "1 week ago";
+                        if (days < 30) return `${Math.floor(days / 7)} weeks ago`;
+                        if (days < 60) return "1 month ago";
+                        if (days < 365) return `${Math.floor(days / 30)} months ago`;
+
+                        return date.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        });
+                    })()
+                }
+            </p>
+        </div>
+    </div>
+</div>

@@ -14,4 +14,4 @@ serde_json = { workspace = true }
 chrono = { workspace = true, features = ["serde"] }
 reqwest = { workspace = true }
 tokio = { workspace = true, features = ["rt", "macros", "rt-multi-thread"] }
-tool-stargazer = { workspace = true }
+tool-repo-info = { workspace = true }

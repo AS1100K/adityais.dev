@@ -1,7 +1,7 @@
 [workspace]
 members = [
     "contributing", 
-    "stargazer"
+    "repo-info"
 ]
 
 resolver = "2"
@@ -21,4 +21,4 @@ chrono = "0.4"
 reqwest = "0.12"
 tokio = "1"
 tool-contributing = { path = "./contributing" }
-tool-stargazer = { path = "./stargazer" }
+tool-repo-info = { path = "./repo-info" }

@@ -6,7 +6,7 @@ use std::{
     collections::{HashMap, HashSet},
     fs,
 };
-use tool_stargazer::RepoInfo;
+use tool_repo_info::RepoName;
 
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct SearchRes {
@@ -214,8 +214,8 @@ pub struct GitHubClient {
     user: String,
     client: reqwest::Client,
     prs: Vec<PullRequest>,
-    repo_info: HashSet<RepoInfo>,
-    star_count: tool_stargazer::RepoStarCount,
+    repo_info: HashSet<RepoName>,
+    star_count: tool_repo_info::RepoInfoMap,
 }
 
 impl GitHubClient {
@@ -224,7 +224,7 @@ impl GitHubClient {
     const SEARCH_ISSUES: &str = "https://api.github.com/search/issues";
 
     const PR_FILE_NAME: &str = "prs.json";
-    const STARS_FILE_NAME: &str = "stars.json";
+    const REPO_INFO_FILE_NAME: &str = "repo-info.json";
 
     const ACCEPT_HEADER: &str = "application/vnd.github+json";
     const GITHUB_API_VERSION_HEADER: &str = "2022-11-28";
@@ -315,17 +315,17 @@ impl GitHubClient {
                 }
 
                 self.prs.push(pr.clone());
-                let repo_info = RepoInfo::new(pr.owner_repo.0, pr.owner_repo.1);
+                let repo_info = RepoName::new(pr.owner_repo.0, pr.owner_repo.1);
                 self.repo_info.insert(repo_info);
             }
         }
 
         // Process stars
         let mut star_count =
-            tool_stargazer::GitHubStargazerCount::new(self.token.clone(), &self.repo_info);
+            tool_repo_info::GitHubStargazerCount::new(self.token.clone(), &self.repo_info);
         star_count.auto().await;
 
-        self.star_count = star_count.star_count;
+        self.star_count = star_count.repo_info;
     }
 
     pub fn save(self) {
@@ -334,6 +334,6 @@ impl GitHubClient {
 
         let json =
             serde_json::to_string(&self.star_count).expect("Failed to convert the stars in json");
-        fs::write(Self::STARS_FILE_NAME, json).expect("Failed to write to the file");
+        fs::write(Self::REPO_INFO_FILE_NAME, json).expect("Failed to write to the file");
     }
 }
