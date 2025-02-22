@@ -3,8 +3,21 @@ import Main from "@layout/main.astro";
 
 import all_prs from "../../prs.json";
 import stars from "../../stars.json";
+import SocialButtons from "src/components/SocialButtons.astro";
+import Contribution from "src/components/Contribution.astro";
 ---
 
 <Main title="Open Source Contributions of Aditya Kumar">
-    {all_prs.map((pr) => <p>{pr.title}</p>)}
+    <div class="my-12">
+        <h1 class="font-extrabold text-3xl md:text-5xl my-3">
+            <span class="text-primary">Aditya Kumar is</span>
+            <span class="font-semibold animate-pulse">Contributing...</span>
+        </h1>
+        <p class="pb-12">
+            Discover <a href="https://github.com/as1100k" class="font-bold underline">@AS1100K</a>'s
+            recent pull requests on GitHub
+        </p>
+        <SocialButtons />
+    </div>
+    {all_prs.map((pr) => <Contribution data={pr} />)}
 </Main>
