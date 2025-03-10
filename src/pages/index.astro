@@ -13,11 +13,11 @@ import SocialButtons from "../components/SocialButtons.astro";
     <div class="width-[90vw] max-w-2xl absolute z-10 left-0">
       <!-- TODO: Automate this section-->
       <div class="relative">
-        <a href="/contributing">
+        <a href="/blog/introducing-pastey">
           <div
             class="text-sm italic px-4 py-2 border-1 w-fit rounded-3xl absolute left-[-1rem] top-[-2.5rem] cursor-pointer"
           >
-            🎉 NEW: Contributing Page
+            🎉 NEW: Introducing Pastey
           </div>
         </a>
       </div>
@@ -112,6 +112,12 @@ import SocialButtons from "../components/SocialButtons.astro";
     <h1 id="projects" class="text-primary font-bold text-4xl mb-10">Featured Projects</h1>
     <AutoGrid>
       <FeaturedProject
+        title="Pastey"
+        description={["Macros for all your token pasting needs. Successor of paste"]}
+        github_url="as1100k/pastey"
+        languages_n_tools={["Rust"]}
+      />
+      <FeaturedProject
         title="Aether"
         description={["Collection of Minecraft Bots and Plugins written in rust."]}
         github_url="as1100k/aether"
@@ -131,13 +137,6 @@ import SocialButtons from "../components/SocialButtons.astro";
         description={["A very simple GitHub action to install rust toolchain."]}
         github_url="rs-workspace/rust-toolchain"
         languages_n_tools={["TypeScript", "GitHub Actions"]}
-      />
-      <FeaturedProject
-        title="cargo-wiki"
-        description={["Cargo Extension for generating rust doc in markdown."]}
-        github_url="as1100k/cargo-wiki"
-        languages_n_tools={["Rust", "rustdoc", "Cargo", "Extension"]}
-        wip={true}
       />
     </AutoGrid>
     <br />
