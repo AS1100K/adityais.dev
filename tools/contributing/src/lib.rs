@@ -20,7 +20,7 @@ pub struct PullRequest {
     pub title: String,
     pub number: usize,
     pub owner_repo: (String, String),
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     pub state: PullRequestState,
     pub owner_avatar_url: String,
 }
@@ -44,7 +44,7 @@ impl<'de> Deserialize<'de> for PullRequest {
             HtmlUrl,
             Title,
             Number,
-            UpdatedAt,
+            CreatedAt,
             #[serde(rename = "user")]
             OwnerAvatarURL,
             State,
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for PullRequest {
                 let mut html_url = None;
                 let mut title = None;
                 let mut number = None;
-                let mut updated_at = None;
+                let mut created_at = None;
                 let mut avatar_url = None;
                 let mut draft = None;
                 let mut inner_pull_request = None;
@@ -109,12 +109,12 @@ impl<'de> Deserialize<'de> for PullRequest {
 
                             number = Some(map.next_value()?)
                         }
-                        Field::UpdatedAt => {
-                            if updated_at.is_some() {
-                                return Err(de::Error::duplicate_field("updated_at"));
+                        Field::CreatedAt => {
+                            if created_at.is_some() {
+                                return Err(de::Error::duplicate_field("created_at"));
                             }
 
-                            updated_at = Some(map.next_value()?)
+                            created_at = Some(map.next_value()?)
                         }
                         Field::OwnerAvatarURL => {
                             if avatar_url.is_some() {
@@ -165,8 +165,8 @@ impl<'de> Deserialize<'de> for PullRequest {
 
                 let title = title.ok_or_else(|| de::Error::missing_field("title"))?;
                 let number = number.ok_or_else(|| de::Error::missing_field("number"))?;
-                let updated_at =
-                    updated_at.ok_or_else(|| de::Error::missing_field("updated_at"))?;
+                let created_at =
+                    created_at.ok_or_else(|| de::Error::missing_field("updated_at"))?;
 
                 let avatar_url: InnerUser =
                     avatar_url.ok_or_else(|| de::Error::missing_field("user"))?;
@@ -198,7 +198,7 @@ impl<'de> Deserialize<'de> for PullRequest {
                     owner_repo,
                     title,
                     number,
-                    updated_at,
+                    created_at,
                     owner_avatar_url: avatar_url,
                     state: our_state,
                 })

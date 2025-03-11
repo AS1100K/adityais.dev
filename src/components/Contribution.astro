@@ -7,7 +7,8 @@ interface Props {
         title: string;
         number: number;
         owner_repo: string[];
-        updated_at: string;
+        // TODO: Convert it to format like `1 day ago`, `5 days ago`, `a month ago`, etc.
+        created_at: string;
         state: string;
         owner_avatar_url: string;
     };
@@ -101,7 +102,7 @@ switch (props.data.state) {
             <p class="text-[#646464]">
                 {
                     (() => {
-                        const date = new Date(props.data.updated_at);
+                        const date = new Date(props.data.created_at);
                         const now = new Date();
                         const diff = now.getTime() - date.getTime();
                         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
