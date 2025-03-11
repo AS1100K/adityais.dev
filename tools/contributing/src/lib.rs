@@ -166,13 +166,13 @@ impl<'de> Deserialize<'de> for PullRequest {
                 let title = title.ok_or_else(|| de::Error::missing_field("title"))?;
                 let number = number.ok_or_else(|| de::Error::missing_field("number"))?;
                 let created_at =
-                    created_at.ok_or_else(|| de::Error::missing_field("updated_at"))?;
+                    created_at.ok_or_else(|| de::Error::missing_field("created_at"))?;
 
                 let avatar_url: InnerUser =
                     avatar_url.ok_or_else(|| de::Error::missing_field("user"))?;
                 let avatar_url = avatar_url.avatar_url;
 
-                let draft: bool = draft.ok_or_else(|| de::Error::missing_field("draaft"))?;
+                let draft: bool = draft.ok_or_else(|| de::Error::missing_field("draft"))?;
                 let state: String = state.ok_or_else(|| de::Error::missing_field("state"))?;
                 let inner_pull_request: InnerPullRequest =
                     inner_pull_request.ok_or_else(|| de::Error::missing_field("pull_request"))?;
