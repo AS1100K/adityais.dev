@@ -4,6 +4,7 @@
 > Please refer to [`tools/README.md`](../README.md) before this.
 
 ## Output
+
 This tool generates two files: `prs.json` and `stars.json`.
 
 ### `prs.json`
@@ -33,12 +34,12 @@ _Types_
 - `title`: Title of the PR
 - `number`: Number of the PR
 - `owner_repo`: Array of repository owner and repo respectively
-- `updated_at`: Last Updated At
+- `created_at`: PR created at
 - `state`:
-    - `Open`: The PR is open
-    - `Draft`: The PR is marked as draft
-    - `Closed`: The PR is closed with unmerged commits
-    - `Merged`: The PR is merged
+  - `Open`: The PR is open
+  - `Draft`: The PR is marked as draft
+  - `Closed`: The PR is closed with unmerged commits
+  - `Merged`: The PR is merged
 - `owner_avatar_url`: PR Author's GitHub Avatar. For resizing pass `s={width}` param
 
 ### `repo-info.json`
