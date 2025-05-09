@@ -3,7 +3,7 @@ import Main from "@layout/main.astro";
 import { getCollection } from "astro:content";
 
 let blogs = await getCollection("blog");
-blogs = blogs.sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate));
+blogs = blogs.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
 <Main title="Blogs">
