@@ -2,6 +2,7 @@
 layout: "@layout/blog.astro"
 title: 2024 Year in Review
 description: "A reflection on 2024: My journey of growth, learning, and achievements. From open source contributions and creating Rust projects to building a portfolio and exploring new technologies like Gerrit and Bevy-Discord integration."
+pubDate: 2024-12-31
 ---
 
 # Year in Review: What 2024 Taught Me as a Developer

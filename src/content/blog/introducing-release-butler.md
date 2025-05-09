@@ -2,6 +2,7 @@
 layout: "@layout/blog.astro"
 title: Introducing Release Butler
 description: "Introducing Release Butler - A GitHub App that automates the process of creating pull requests for version bumps and changelogs based on issues with a specific label. When the PR is merged, it can create a tag and github release (optional)."
+pubDate: 2025-02-12
 ---
 
 # What is Release Butler?

@@ -2,7 +2,8 @@
 import Main from "@layout/main.astro";
 import { getCollection } from "astro:content";
 
-const blogs = await getCollection("blog");
+let blogs = await getCollection("blog");
+blogs = blogs.sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate));
 ---
 
 <Main title="Blogs">
@@ -23,7 +24,7 @@ const blogs = await getCollection("blog");
         </svg>
         <div>A redesign of this page is in progress.</div>
     </div>
-    
+
     <h1 class="text-4xl font-black mb-4 text-accent">Blogs</h1>
     {
         blogs.length > 0 ? (

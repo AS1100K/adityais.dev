@@ -2,6 +2,7 @@
 interface Props {
   title: string;
   description?: string;
+  pubDate?: Date;
 }
 
 const page_description = Astro.props;
@@ -24,6 +25,17 @@ import Footer from "../components/Footer.astro";
         : default_description}
     />
 
+    {
+      page_description.pubDate && (
+        <meta
+          name="article:published_time"
+          content={page_description.pubDate.toISOString()}
+        />
+      )
+    }
+
+    <meta name="author" content="Aditya Kumar" />
+    <link rel="author" href="https://adityais.dev" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 

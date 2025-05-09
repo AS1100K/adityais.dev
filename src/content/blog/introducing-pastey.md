@@ -2,6 +2,7 @@
 layout: "@layout/blog.astro"
 title: Introducing Pastey - Successor of Paste
 description: "Introducing Pastey - A drop-in replacement for paste crate"
+pubDate: 2025-03-10
 ---
 
 # Introducing `pastey`
@@ -57,26 +58,26 @@ The `pastey` crate also comes with additional features:
 
 - Raw Identifier Generation: The `pastey` crate supports a raw mode in `paste!` to generate raw
   identifiers, like `loop`. The following example shows how it's used:
-  
+
   ```rust
   use pastey::paste;
-  
+
   macro_rules! define_struct_and_impl {
       ($name:ident $(- $name_tail:ident)*) => {
           paste!{
               struct [< # $name:camel $( $name_tail)* >]; // '#' signals a raw identifier
-  
+
               impl [< # $name:camel $( $name_tail)* >] {
                   fn [< # $name:snake $( _ $name_tail:snake)* >]() {}
               }
-  
+
           }
       }
   }
-  
+
   define_struct_and_impl!(loop);
   define_struct_and_impl!(loop - xyz);
-  
+
   fn test_fn() {
       let _ = Loop::r#loop();
       let _ = Loopxyz::loop_xyz();
