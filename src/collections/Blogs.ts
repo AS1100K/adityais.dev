@@ -1,18 +1,54 @@
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { BlocksFeature, FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
+import { CodeBlock } from '../blocks/CodeBlock'
+import { authenticated, authenticatedOrPublished } from '@/utilities/auth'
 
 export const Blogs: CollectionConfig = {
   slug: 'blogs',
-  access: {},
+  access: {
+    create: authenticated,
+    read: authenticatedOrPublished,
+    delete: authenticatedOrPublished,
+    readVersions: authenticated,
+    update: authenticated,
+  },
   fields: [
     {
       name: 'title',
       type: 'text',
     },
     {
-      name: 'content',
-      type: 'richText',
-      editor: lexicalEditor({}),
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'heroImage',
+              type: 'upload',
+              relationTo: 'media',
+            },
+            {
+              name: 'content',
+              type: 'richText',
+              editor: lexicalEditor({
+                features: ({ defaultFeatures, rootFeatures }) => [
+                  ...defaultFeatures,
+                  ...rootFeatures,
+                  FixedToolbarFeature(),
+                  BlocksFeature({
+                    blocks: [CodeBlock],
+                  }),
+                ],
+              }),
+            },
+          ],
+        },
+        {
+          label: 'Meta',
+          fields: [],
+        },
+      ],
     },
   ],
   admin: {

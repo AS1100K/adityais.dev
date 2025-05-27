@@ -158,6 +158,7 @@ export interface Media {
 export interface Blog {
   id: number;
   title?: string | null;
+  heroImage?: (number | null) | Media;
   content?: {
     root: {
       type: string;
@@ -276,6 +277,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface BlogsSelect<T extends boolean = true> {
   title?: T;
+  heroImage?: T;
   content?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -311,6 +313,17 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeBlock".
+ */
+export interface CodeBlock {
+  language: string;
+  code: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'CodeBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
