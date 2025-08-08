@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "npm run generate:blogs && astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate:blogs": "cd tools/devto-fetcher && python3 fetch_blogs.py && mv devto-blogs.json ../../"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

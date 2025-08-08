@@ -1,0 +1,60 @@
+{
+  "updated_at": "2025-08-08T19:28:16.377043",
+  "total_articles": 4,
+  "devto_articles": 0,
+  "local_articles": 4,
+  "articles": [
+    {
+      "id": "2024-year-in-review",
+      "title": "2024 Year in Review",
+      "description": "A comprehensive review of my journey through 2024",
+      "url": "/blog/2024-year-in-review",
+      "published_at": "2024-12-31T00:00:00Z",
+      "cover_image": "https://images.unsplash.com/photo-1493612276216-ee3925520721?w=800&h=400&fit=crop",
+      "tag_list": ["year-review", "personal", "reflection"],
+      "reading_time_minutes": 5,
+      "public_reactions_count": 0,
+      "comments_count": 0,
+      "source": "local"
+    },
+    {
+      "id": "gsoc-2025",
+      "title": "GSoC 2025 - My Journey Begins",
+      "description": "Getting accepted into Google Summer of Code 2025",
+      "url": "/blog/gsoc-2025",
+      "published_at": "2024-11-15T00:00:00Z",
+      "cover_image": "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&h=400&fit=crop",
+      "tag_list": ["gsoc", "google", "open-source"],
+      "reading_time_minutes": 8,
+      "public_reactions_count": 0,
+      "comments_count": 0,
+      "source": "local"
+    },
+    {
+      "id": "introducing-pastey",
+      "title": "Introducing Pastey - A Modern Pastebin",
+      "description": "A new pastebin service built with modern web technologies",
+      "url": "/blog/introducing-pastey",
+      "published_at": "2024-10-20T00:00:00Z",
+      "cover_image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
+      "tag_list": ["project", "web-development", "pastebin"],
+      "reading_time_minutes": 6,
+      "public_reactions_count": 0,
+      "comments_count": 0,
+      "source": "local"
+    },
+    {
+      "id": "introducing-release-butler",
+      "title": "Introducing Release Butler",
+      "description": "Automated release management for your projects",
+      "url": "/blog/introducing-release-butler",
+      "published_at": "2024-09-15T00:00:00Z",
+      "cover_image": "https://images.unsplash.com/photo-1516382799247-87df95d790b7?w=800&h=400&fit=crop",
+      "tag_list": ["automation", "devops", "tools"],
+      "reading_time_minutes": 7,
+      "public_reactions_count": 0,
+      "comments_count": 0,
+      "source": "local"
+    }
+  ]
+}
