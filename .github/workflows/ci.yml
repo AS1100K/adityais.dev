@@ -40,6 +40,14 @@ jobs:
           mv repo-info.json ../
           cd ../
 
+      - name: Upload JSON files as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-json-files
+          path: |
+            prs.json
+            repo-info.json
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
