@@ -40,38 +40,13 @@ jobs:
           mv repo-info.json ../
           cd ../
 
-      - name: Add JSON files to Actions Summary
-        uses: actions/github-script@v7
+      - name: Upload JSON files as artifacts
+        uses: actions/upload-artifact@v4
         with:
-          script: |
-            const fs = require('fs');
-
-            try {
-              // Read JSON files
-              const prsContent = fs.readFileSync('prs.json', 'utf8');
-              const repoInfoContent = fs.readFileSync('repo-info.json', 'utf8');
-              
-              let summary = '# Generated JSON Files\n\n';
-              
-              summary += '## prs.json\n\n';
-              summary += '```json\n';
-              summary += prsContent;
-              summary += '\n```\n\n';
-              
-              summary += '## repo-info.json\n\n';
-              summary += '```json\n';
-              summary += repoInfoContent;
-              summary += '\n```\n';
-              
-              await core.summary.addRaw(summary).write();
-              
-            } catch (error) {
-              console.error('Error reading JSON files:', error);
-              await core.summary
-                .addRaw('# Error Reading JSON Files\n\n')
-                .addRaw(`Error: ${error.message}`)
-                .write();
-            }
+          name: generated-json-files
+          path: |
+            prs.json
+            repo-info.json
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
