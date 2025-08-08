@@ -6,6 +6,7 @@ import portrait from "../assets/portrait.jpg";
 import AutoGrid from "../components/TwoGrid.astro";
 import Button from "../components/Button.astro";
 import SocialButtons from "../components/SocialButtons.astro";
+import ExperienceEntry from "../components/ExperienceEntry.astro";
 ---
 
 <Main title="Aditya Kumar">
@@ -87,6 +88,22 @@ import SocialButtons from "../components/SocialButtons.astro";
         sizes={"(max-width: 886px) 430px, (max-width: 1280px) 510px, 1200px"}
         quality="high"
         class:list={["w-[90vw] h-auto rounded-3xl my-10", "sm:hidden"]}
+      />
+    </div>
+  </div>
+  <div class="my-12">
+    <h1 id="experience" class="text-primary font-bold text-4xl mb-10">Experience</h1>
+    <!-- TODO: Auto-update this experience section in the future -->
+    <div class="max-w-6xl pl-4">
+      <ExperienceEntry
+        company="Google Summer Of Code (GSOC) 2025"
+        role="Open Source Developer"
+        duration="May 2025 - Present"
+        location="Remote"
+        description="Contributing to the kornia-rs ecosystem by implementing efficient detection algorithms for both synthetic and natural features in Rust. Developing an April Tag detector optimized for calibration and structured environments, along with an ORB-based detector for natural feature extraction. These modules are crucial for robust visual localization, Visual SLAM applications, and robotics tasks such as robot navigation, camera calibration, and pose estimation. The project enhances kornia-rs as a comprehensive toolkit for computer vision applications in robotics and augmented reality."
+        company_url="https://github.com/kornia/kornia-rs"
+        isInternship={true}
+        isLast={true}
       />
     </div>
   </div>

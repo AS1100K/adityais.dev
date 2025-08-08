@@ -1,0 +1,63 @@
+---
+interface Props {
+  company: string;
+  role: string;
+  duration: string;
+  description: string;
+  location?: string;
+  company_url?: string;
+  technologies?: string[];
+  logo?: string;
+  isLast?: boolean;
+  isInternship?: boolean;
+}
+
+const props = Astro.props;
+---
+
+<div class="relative flex gap-6 pb-16">
+  <!-- Timeline dot and line -->
+  <div class="flex flex-col items-center pt-1">
+    <div class="w-3 h-3 bg-primary rounded-full border-2 border-white shadow-lg relative z-10 flex-shrink-0"></div>
+    {!props.isLast && (
+      <div class="w-0.5 bg-gray-300 flex-1 mt-2 min-h-[100px]"></div>
+    )}
+  </div>
+  
+  <!-- Content -->
+  <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
+    <!-- Left column: Role and Duration -->
+    <div class="order-1">
+      <div class="flex items-center gap-3 mb-3">
+        <h3 class="text-xl lg:text-2xl font-bold text-text m-0 leading-tight">{props.role}</h3>
+        {props.isInternship && (
+          <span class="bg-primary text-white text-xs font-medium px-3 py-1 rounded-full">
+            Internship
+          </span>
+        )}
+      </div>
+      <p class="text-sm text-gray-500 m-0 font-medium">{props.duration}</p>
+    </div>
+    
+    <!-- Right column: Company, Location, Description, URL -->
+    <div class="order-2">
+      <h4 class="text-lg lg:text-xl font-bold text-text m-0 mb-1">{props.company}</h4>
+      {props.location && (
+        <p class="text-sm text-gray-500 m-0 mb-4 font-medium uppercase tracking-wide">{props.location}</p>
+      )}
+      
+      <p class="text-base text-text m-0 mb-4 leading-relaxed">{props.description}</p>
+      
+      {props.company_url && (
+        <div class="flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-primary">
+            <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <a href={props.company_url} class="text-primary hover:text-accent transition-colors text-sm font-medium" target="_blank" rel="noopener noreferrer">
+            {props.company_url.replace(/^https?:\/\//, '')}
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
