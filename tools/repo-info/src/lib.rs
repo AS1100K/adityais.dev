@@ -112,7 +112,7 @@ impl<'a> GitHubStargazerCount<'a> {
                     }
                     404 => {
                         // Move to next repo
-                        eprintln!("Got 404 for {}", url);
+                        eprintln!("Got 404 for {url}");
                         break;
                     }
                     200 | 201 => {
