@@ -19,5 +19,5 @@ import Contribution from "src/components/Contribution.astro";
         </p>
         <SocialButtons />
     </div>
-    {all_prs.map((pr) => <Contribution data={pr} repo_info={repo_info} />)}
+    {all_prs.map((pr: any) => <Contribution data={pr} repo_info={repo_info} />)}
 </Main>
