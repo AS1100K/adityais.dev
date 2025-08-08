@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  company: string;
+  role: string;
+  duration: string;
+  description: string;
+  location?: string;
+  company_url?: string;
+  technologies?: string[];
+  logo?: string;
+}
+
+const props = Astro.props;
+---
+
+<div class="rounded-xl border-1 border-solid border-text p-6 mb-6 relative">
+  <div class="flex justify-between items-start mb-4">
+    <div class="flex items-center gap-3">
+      {props.logo && (
+        <Image 
+          src={props.logo} 
+          width={48} 
+          height={48} 
+          alt={`${props.company} logo`}
+          class="rounded-lg"
+        />
+      )}
+      <div>
+        <h3 class="text-xl font-bold text-primary m-0">{props.role}</h3>
+        {props.company_url ? (
+          <a href={props.company_url} class="text-lg font-semibold text-text hover:text-primary transition-colors">
+            {props.company}
+          </a>
+        ) : (
+          <p class="text-lg font-semibold text-text m-0">{props.company}</p>
+        )}
+        {props.location && (
+          <p class="text-sm text-gray-600 m-0">{props.location}</p>
+        )}
+      </div>
+    </div>
+    <div class="text-right">
+      <p class="text-sm font-medium text-secondary m-0">{props.duration}</p>
+    </div>
+  </div>
+  
+  <div class="mb-4">
+    <p class="text-base text-text m-0">{props.description}</p>
+  </div>
+  
+  {props.technologies && props.technologies.length > 0 && (
+    <div class="flex flex-wrap gap-2">
+      {props.technologies.map((tech) => (
+        <div class="rounded-full bg-secondary px-3 py-1">
+          <p class="text-sm text-text m-0">{tech}</p>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
