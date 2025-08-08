@@ -89,9 +89,10 @@ The `pastey` crate also comes with additional features:
   this behavior can be problematic if they are meant to be distinct. With `camel_edge`
 
   1. `my__ident` is converted to `My_Ident`
-  2. `_my__ident` is converted to  `_My_Ident`
+  2. `_my__ident` is converted to `_My_Ident`
 
   [More Info](https://github.com/AS1100K/pastey/issues/3)
+
 - `lower_camel`: The `lower_camel` modifier is a variation of `camel` case conversion that makes
   the first letter lowercase instead of uppercase.
 

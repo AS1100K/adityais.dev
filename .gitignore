@@ -31,6 +31,9 @@ pnpm-debug.log*
 wrangler.toml
 worker-configuration.d.ts
 
+# Rust build artifacts
+tools/target/
+
 # Tools Generated files
 prs.json
 repo-info.json

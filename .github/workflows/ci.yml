@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '00 13 * * *' # Runs at 6:30 PM IST (13:00 UTC)
+    - cron: "00 13 * * *" # Runs at 6:30 PM IST (13:00 UTC)
   workflow_dispatch:
 
 permissions:
@@ -19,46 +19,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/create-github-app-token@v1
-      id: app-token
-      with:
-        app-id: ${{vars.CHORE_APP_ID}}
-        private-key: ${{secrets.CHORE_ACCOUNT_TOKEN}}
-        owner: ${{ github.repository_owner }}
-        repositories: |
-          adityais.dev
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{vars.CHORE_APP_ID}}
+          private-key: ${{secrets.CHORE_ACCOUNT_TOKEN}}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            adityais.dev
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Run Tools
-      run: |
-        cd tools
-        export TOOLS_CONTRIBUTING_TOKEN="${{steps.app-token.outputs.token}}"
-        cargo run -p tool-contributing
-        mv prs.json ../
-        mv repo-info.json ../
-        cd ../
+      - name: Run Tools
+        run: |
+          cd tools
+          export TOOLS_CONTRIBUTING_TOKEN="${{steps.app-token.outputs.token}}"
+          cargo run -p tool-contributing
+          mv prs.json ../
+          mv repo-info.json ../
+          cd ../
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '23.4'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "23.4"
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Set ENV variable
-      run: echo "GITHUB_API_KEY=${{ steps.app-token.outputs.token }}" >> $GITHUB_ENV
-      
-    - name: Build Astro app
-      run: npm run build
+      - name: Set ENV variable
+        run: echo "GITHUB_API_KEY=${{ steps.app-token.outputs.token }}" >> $GITHUB_ENV
 
-    - name: Upload GitHub Pages Artifact
-      id: deployment
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: dist
+      - name: Build Astro app
+        run: npm run build
+
+      - name: Upload GitHub Pages Artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
 
   deploy:
     needs: build
@@ -71,5 +71,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
