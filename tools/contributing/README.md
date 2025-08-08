@@ -13,18 +13,15 @@ _Example_
 
 ```json
 [
-    {
-        "html_url": "https://github.com/AS1100K/adityais.dev/pull/4",
-        "title": "Add tools for getting contributing data",
-        "number": 4,
-        "owner_repo": [
-            "AS1100K",
-            "adityais.dev"
-        ],
-        "updated_at": "2025-02-17T16:06:07Z",
-        "state": "Open",
-        "owner_avatar_url": "https://avatars.githubusercontent.com/u/117935160?v=4"
-    }
+  {
+    "html_url": "https://github.com/AS1100K/adityais.dev/pull/4",
+    "title": "Add tools for getting contributing data",
+    "number": 4,
+    "owner_repo": ["AS1100K", "adityais.dev"],
+    "updated_at": "2025-02-17T16:06:07Z",
+    "state": "Open",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/117935160?v=4"
+  }
 ]
 ```
 
@@ -48,10 +45,10 @@ _Example_
 
 ```json
 {
-    "AS1100K/cargo-wiki": {
-        "stars": 3,
-        "avatar_url": "https://avatars.githubusercontent.com/u/117935160?v=4"
-    }
+  "AS1100K/cargo-wiki": {
+    "stars": 3,
+    "avatar_url": "https://avatars.githubusercontent.com/u/117935160?v=4"
+  }
 }
 ```
 

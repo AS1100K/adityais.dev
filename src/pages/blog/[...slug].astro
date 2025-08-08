@@ -4,11 +4,11 @@ import type { CollectionEntry } from "astro:content";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
-    const blogs = await getCollection("blog");
-    return blogs.map((blog) => ({
-        params: { slug: blog.id },
-        props: blog,
-    }));
+  const blogs = await getCollection("blog");
+  return blogs.map((blog) => ({
+    params: { slug: blog.id },
+    props: blog,
+  }));
 }
 
 type Props = CollectionEntry<"blog">;
@@ -18,5 +18,5 @@ const { Content } = await render(blog);
 ---
 
 <Blog frontmatter={{ ...blog.data, title: blog.data.title || "Default Title" }}>
-    <Content />
+  <Content />
 </Blog>

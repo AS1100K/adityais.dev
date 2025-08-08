@@ -1,17 +1,25 @@
 ---
 import childProcess from "child_process";
 
-const hash = childProcess.execSync("git rev-parse --short HEAD").toString().trim();
+const hash = childProcess
+  .execSync("git rev-parse --short HEAD")
+  .toString()
+  .trim();
 ---
 
 <footer class="my-10">
   <p>
-    Designed and Developed by <a class="primary-text" href="https://github.com/as1100k"
-      >Aditya Kumar</a
+    Designed and Developed by <a
+      class="primary-text"
+      href="https://github.com/as1100k">Aditya Kumar</a
     >
 
     <div class="flex items-center gap-4 justify-start">
-      <p class="text-sm text-gray-400">Debug Info</p><span class="text-gray-300"> | </span>
+      <p class="text-sm text-gray-400">Debug Info</p><span
+        class="text-gray-300"
+      >
+        |
+      </span>
       <p class="text-sm text-gray-400">
         Build Time: {
           new Date(Date.now()).toLocaleString(undefined, {
