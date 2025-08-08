@@ -45,70 +45,31 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const path = require('path');
 
             try {
-              // Read and display prs.json
-              const prsData = JSON.parse(fs.readFileSync('prs.json', 'utf8'));
-              const repoInfoData = JSON.parse(fs.readFileSync('repo-info.json', 'utf8'));
+              // Read JSON files
+              const prsContent = fs.readFileSync('prs.json', 'utf8');
+              const repoInfoContent = fs.readFileSync('repo-info.json', 'utf8');
               
-              let summary = '# 📊 Generated JSON Files Summary\n\n';
+              let summary = '# Generated JSON Files\n\n';
               
-              // PRs Summary
-              summary += '## 🔀 Pull Requests (`prs.json`)\n\n';
-              if (Array.isArray(prsData) && prsData.length > 0) {
-                summary += `Found **${prsData.length}** pull requests:\n\n`;
-                summary += '| Repository | PR # | Title | State | Created |\n';
-                summary += '|------------|------|-------|-------|----------|\n';
-                
-                prsData.slice(0, 10).forEach(pr => {
-                  const repo = `${pr.owner_repo[0]}/${pr.owner_repo[1]}`;
-                  const title = pr.title.length > 50 ? pr.title.substring(0, 47) + '...' : pr.title;
-                  const date = new Date(pr.created_at).toISOString().split('T')[0];
-                  summary += `| [${repo}](${pr.html_url}) | #${pr.number} | ${title} | ${pr.state} | ${date} |\n`;
-                });
-                
-                if (prsData.length > 10) {
-                  summary += `\n*Showing first 10 of ${prsData.length} pull requests*\n`;
-                }
-              } else {
-                summary += '*No pull requests found*\n';
-              }
+              summary += '## prs.json\n\n';
+              summary += '```json\n';
+              summary += prsContent;
+              summary += '\n```\n\n';
               
-              // Repository Info Summary
-              summary += '\n## ⭐ Repository Information (`repo-info.json`)\n\n';
-              if (Object.keys(repoInfoData).length > 0) {
-                summary += '| Repository | Stars |\n';
-                summary += '|------------|-------|\n';
-                
-                Object.entries(repoInfoData)
-                  .sort(([,a], [,b]) => b - a)
-                  .forEach(([repo, stars]) => {
-                    summary += `| ${repo} | ⭐ ${stars} |\n`;
-                  });
-              } else {
-                summary += '*No repository information found*\n';
-              }
-              
-              // File sizes
-              const prsSize = fs.statSync('prs.json').size;
-              const repoInfoSize = fs.statSync('repo-info.json').size;
-              
-              summary += '\n## 📁 File Information\n\n';
-              summary += `- \`prs.json\`: ${(prsSize / 1024).toFixed(2)} KB\n`;
-              summary += `- \`repo-info.json\`: ${(repoInfoSize / 1024).toFixed(2)} KB\n`;
-              
-              // Add timestamp
-              summary += `\n*Generated on: ${new Date().toISOString()}*\n`;
+              summary += '## repo-info.json\n\n';
+              summary += '```json\n';
+              summary += repoInfoContent;
+              summary += '\n```\n';
               
               await core.summary.addRaw(summary).write();
               
             } catch (error) {
-              console.error('Error processing JSON files:', error);
+              console.error('Error reading JSON files:', error);
               await core.summary
-                .addRaw('# ❌ Error Processing JSON Files\n\n')
-                .addRaw(`Error: ${error.message}\n\n`)
-                .addRaw('The JSON files may be missing or contain invalid data.')
+                .addRaw('# Error Reading JSON Files\n\n')
+                .addRaw(`Error: ${error.message}`)
                 .write();
             }
 
