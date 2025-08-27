@@ -32,15 +32,29 @@ while True:
             continue
 
         is_published = article["published"]
+        path_already_exists = article["canonical_url"] is not None and str(article["canonical_url"]).startswith("https://adityais.dev")
 
-        file_path = (
+        (file_path, slug) = (
             utils.file_path_from_canonical_url(article["canonical_url"], is_published)
-            if article["canonical_url"] is not None and article["canonical_url"] != article["url"]
+            if path_already_exists
             # TODO: Make sure we don't overwrite anything
             else utils.generate_file_path_from_title(article["title"], is_published)
         )
 
-        print(f"Generated: {file_path}")
+        if is_published and not path_already_exists:
+            res = requests.put(
+                f"https://dev.to/api/articles/{article['id']}",
+                headers=AUTH_HEADER,
+                json={
+                    "article": {
+                        "canonical_url": f"https://adityais.dev/blog/{slug}"
+                    }
+                }
+            )
+            print(f"Updated Cononical URL for Post ID: {article['id']}.")
+
+            if res.status_code != 200:
+                print(f"    Error Response: {res.json()}")
 
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, "w") as f:
@@ -57,5 +71,7 @@ v1Data:
 
 {article["body_markdown"]}
                 """)
+
+        print(f"Generated: {file_path}")
 
     page_number += 1
