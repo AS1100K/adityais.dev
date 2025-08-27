@@ -2,6 +2,9 @@ import os
 import requests
 import utils
 
+# These articles are used for testing
+BLACKLIST_ARTICLE_ID = ["2802437"]
+
 API_KEY = os.getenv("DEV_TO_API_KEY")
 AUTH_HEADER = {"api-key": API_KEY}
 
@@ -28,6 +31,9 @@ while True:
         break
 
     for article in articles:
+        if str(article["id"]) in BLACKLIST_ARTICLE_ID:
+            continue
+
         if article["user"]["username"].lower() != "as1100k":
             continue
 
