@@ -2,12 +2,18 @@
 import Main from "./main.astro";
 import Prose from "../components/Prose.astro";
 import SocialButtons from "src/components/SocialButtons.astro";
+import { Image } from "astro:assets";
 
 export interface Props {
   frontmatter: {
     title: string;
     description?: string;
     pubDate: Date;
+    v1Data?: {
+      devtoUrl: string;
+      readingTimeMinutes: number;
+      coverImage?: string;
+    };
   };
 }
 
@@ -45,12 +51,42 @@ const { frontmatter } = Astro.props;
 
   <div class="prose m-auto"><SocialButtons /></div>
 
-  <p class="prose m-auto italic mb-2 text-gray-500">
-    Published on: {frontmatter.pubDate.toDateString()}
-  </p>
+  <!-- For older blogs that includes title in the markdown content -->
+  {
+    !frontmatter.v1Data && (
+      <p class="prose m-auto italic mb-2 text-gray-500">
+        Published on: {frontmatter.pubDate.toDateString()}
+      </p>
+    )
+  }
 
   <article>
     <Prose>
+      <!-- For newer blogs that doesn't include title in markdown content -->
+      {
+        frontmatter.v1Data && (
+          <>
+            {frontmatter.v1Data.coverImage && (
+              <Image
+                src={frontmatter.v1Data.coverImage}
+                alt={frontmatter.title}
+                width={655}
+                height={274}
+              />
+            )}
+            <h1>{frontmatter.title}</h1>
+            <div class="flex justify-between w-full">
+              <p class="italic text-gray-500 m-0">
+                Published on: {frontmatter.pubDate.toDateString()}
+              </p>
+
+              <p class="italic text-gray-500 m-0">
+                {frontmatter.v1Data.readingTimeMinutes} min read
+              </p>
+            </div>
+          </>
+        )
+      }
       <slot />
     </Prose>
   </article>
