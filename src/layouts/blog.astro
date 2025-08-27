@@ -69,14 +69,24 @@ const { frontmatter } = Astro.props;
       {
         frontmatter.v1Data && (
           <>
-            {frontmatter.v1Data.coverImage && (
+            <div class="not-prose relative">
+              <div class="absolute left-0 md:-left-14">
+                <SocialButtons devtoUrl={frontmatter.v1Data?.devtoUrl} />
+              </div>
+            </div>
+
+            {frontmatter.v1Data.coverImage ? (
               <Image
                 src={frontmatter.v1Data.coverImage}
                 alt={frontmatter.title}
                 width={655}
                 height={274}
               />
+            ) : (
+              <br class="md:hidden" />
+              <br class="md:hidden" />
             )}
+
             <h1>{frontmatter.title}</h1>
             <div class="flex items-center gap-4 bg-secondary rounded-lg p-4">
               <Image

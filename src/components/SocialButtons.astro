@@ -9,7 +9,7 @@ const props = Astro.props;
 ---
 
 <div
-  class={`${props.devtoUrl ? "hidden md:flex flex-col gap-2" : "flex justify-start items-center gap-5"}`}
+  class={`flex justify-start items-center gap-5 ${props.devtoUrl ? "rounded-br-lg md:flex-col gap-2 bg-background p-3 pb-1 md:pt-0" : "justify-start items-center gap-5"}`}
 >
   <a href="https://github.com/as1100k"
     ><button
