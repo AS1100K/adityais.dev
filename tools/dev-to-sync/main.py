@@ -45,17 +45,17 @@ while True:
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, "w") as f:
             f.write(f"""---
-    layout: "@layout/blog.astro"
-    title: "{article["title"]}"
-    description: "{article["description"]}"
-    pubDate: {article["published_at"] if is_published else "2025-08-27"}
-    v1Data:
-        devtoUrl: "{article["url"]}"
-        readingTimeMinutes: {article["reading_time_minutes"]}
-        {f"coverImage: {article['cover_image']}" if article['cover_image'] is not None else "" }
-    ---
+layout: "@layout/blog.astro"
+title: "{article["title"]}"
+description: "{article["description"]}"
+pubDate: {article["published_at"] if is_published else "2025-08-27"}
+v1Data:
+    devtoUrl: "{article["url"]}"
+    readingTimeMinutes: {article["reading_time_minutes"]}
+    {f"coverImage: {article['cover_image']}" if article['cover_image'] is not None else "" }
+---
 
-    {article["body_markdown"]}
+{article["body_markdown"]}
                 """)
 
     page_number += 1
