@@ -52,20 +52,19 @@ const { frontmatter } = Astro.props;
   <!-- For older blogs that includes title in the markdown content -->
   {
     !frontmatter.v1Data && (
-      <p class="prose m-auto italic mb-2 text-gray-500">
-        Published on: {frontmatter.pubDate.toDateString()}
-      </p>
+      <>
+        <div class="prose m-auto">
+          <SocialButtons />
+        </div>
+        <p class="prose m-auto italic mb-2 text-gray-500">
+          Published on: {frontmatter.pubDate.toDateString()}
+        </p>
+      </>
     )
   }
 
   <article>
     <Prose>
-      <div class="not-prose relative">
-        <div class="absolute -left-10">
-          <SocialButtons devtoUrl={frontmatter.v1Data?.devtoUrl} />
-        </div>
-      </div>
-
       <!-- For newer blogs that doesn't include title in markdown content -->
       {
         frontmatter.v1Data && (
