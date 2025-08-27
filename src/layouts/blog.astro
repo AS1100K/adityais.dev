@@ -49,8 +49,6 @@ const { frontmatter } = Astro.props;
     )
   }
 
-  <div class="prose m-auto"><SocialButtons /></div>
-
   <!-- For older blogs that includes title in the markdown content -->
   {
     !frontmatter.v1Data && (
@@ -62,6 +60,12 @@ const { frontmatter } = Astro.props;
 
   <article>
     <Prose>
+      <div class="not-prose relative">
+        <div class="absolute -left-10">
+          <SocialButtons devtoUrl={frontmatter.v1Data?.devtoUrl} />
+        </div>
+      </div>
+
       <!-- For newer blogs that doesn't include title in markdown content -->
       {
         frontmatter.v1Data && (
@@ -75,14 +79,23 @@ const { frontmatter } = Astro.props;
               />
             )}
             <h1>{frontmatter.title}</h1>
-            <div class="flex justify-between w-full">
-              <p class="italic text-gray-500 m-0">
-                Published on: {frontmatter.pubDate.toDateString()}
-              </p>
-
-              <p class="italic text-gray-500 m-0">
-                {frontmatter.v1Data.readingTimeMinutes} min read
-              </p>
+            <div class="flex items-center gap-4 bg-secondary rounded-lg p-4">
+              <Image
+                src="https://media2.dev.to/dynamic/image/width=50,height=50,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F1149176%2F1609ab55-e04b-43e7-9d95-38ee3f784c30.jpg"
+                alt="Aditya Kumar (Author) profile pic"
+                width={50}
+                height={50}
+                class="not-prose rounded-full min-w-[50px] min-h-[50px]"
+                style="min-width:50px;min-height:50px;max-width:50px;max-height:50px;"
+              />
+              <div class="not-prose">
+                <p class="font-semibold">Aditya Kumar</p>
+                <p class="md:text-sm text-xs ">
+                  Published on {frontmatter.pubDate.toDateString()}
+                  <span>•</span>
+                  {frontmatter.v1Data.readingTimeMinutes} min read
+                </p>
+              </div>
             </div>
           </>
         )

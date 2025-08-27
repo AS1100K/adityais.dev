@@ -1,8 +1,16 @@
 ---
 import { Image } from "astro:assets";
+
+export interface Props {
+  devtoUrl?: string;
+}
+
+const props = Astro.props;
 ---
 
-<div class="flex justify-start items-center gap-5">
+<div
+  class={`${props.devtoUrl ? "hidden md:flex flex-col gap-2" : "flex justify-start items-center gap-5"}`}
+>
   <a href="https://github.com/as1100k"
     ><button
       ><Image
@@ -50,6 +58,20 @@ import { Image } from "astro:assets";
       /></button
     ></a
   >
+  {
+    props.devtoUrl && (
+      <a href={props.devtoUrl} target="_blank" referrerpolicy="no-referrer">
+        <button>
+          <Image
+            src="/assets/icons/dev-to.svg"
+            width={24}
+            height={24}
+            alt="View on dev.to"
+          />
+        </button>
+      </a>
+    )
+  }
 </div>
 
 <style>
