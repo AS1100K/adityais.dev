@@ -12,6 +12,7 @@ const blog_schema = z.object({
       coverImage: z.optional(z.string()),
     }),
   ),
+  isDraft: z.optional(z.boolean()),
 });
 
 const blog = defineCollection({

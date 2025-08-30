@@ -6,10 +6,9 @@ import string
 BLOGS_PATH = "src/content/blog/"
 DRAFT_PATH = "src/content/draft/"
 
-def file_path_from_canonical_url(canonical_url: str, is_published: bool) -> tuple[str, str]:
+def file_path_from_canonical_url(canonical_url: str) -> tuple[str, str]:
     path = canonical_url.removeprefix("https://adityais.dev/blog/").removesuffix("/")
-    base_path = BLOGS_PATH if is_published else DRAFT_PATH
-    return (f"{base_path}{path}.md", path)
+    return (f"{BLOGS_PATH}{path}.md", path)
 
 def generate_file_path_from_title(title: str, is_published: bool) -> tuple[str, str]:
     slug = title.lower().replace(" ", "-")

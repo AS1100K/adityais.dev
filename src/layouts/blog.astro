@@ -14,6 +14,7 @@ export interface Props {
       readingTimeMinutes: number;
       coverImage?: string;
     };
+    isDraft?: boolean;
   };
 }
 
@@ -26,7 +27,7 @@ const { frontmatter } = Astro.props;
   pubDate={frontmatter.pubDate}
 >
   {
-    Astro.originPathname.startsWith("/draft/") && (
+    Astro.originPathname.startsWith("/draft/") || frontmatter.isDraft && (
       <div
         class="flex items-center p-4 mb-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50"
         role="alert"

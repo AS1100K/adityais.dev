@@ -1,8 +1,9 @@
 import { defineConfig } from "astro/config";
-
 import sitemap from "@astrojs/sitemap";
-
 import tailwind from "@astrojs/tailwind";
+import fs from "fs";
+
+const draftUrls = JSON.parse(fs.readFileSync("draft-urls.json", "utf-8"));
 
 // https://astro.build/config
 export default defineConfig({
@@ -44,7 +45,7 @@ export default defineConfig({
     sitemap({
       changefreq: "daily",
       priority: 0.9,
-      filter: (page) => !page.includes("draft"),
+      filter: (page) => !draftUrls.includes(page),
     }),
     tailwind(),
   ],

@@ -1,3 +1,4 @@
+import json
 import os
 import requests
 from requests.exceptions import RequestException
@@ -14,6 +15,7 @@ if not API_KEY:
 
 AUTH_HEADER = {"api-key": API_KEY}
 
+draft_urls = []
 page_number = 1
 
 while True:
@@ -51,7 +53,7 @@ while True:
         path_already_exists = article["canonical_url"] is not None and str(article["canonical_url"]).startswith("https://adityais.dev")
 
         (file_path, slug) = (
-            utils.file_path_from_canonical_url(article["canonical_url"], is_published)
+            utils.file_path_from_canonical_url(article["canonical_url"])
             if path_already_exists
             else utils.generate_file_path_from_title(article["title"], is_published)
         )
@@ -70,6 +72,10 @@ while True:
 
             if res.status_code != 200:
                 print(f"    Error Response: {res.json()}")
+        elif not is_published and path_already_exists:
+            draft_urls.append(f"https://adityais.dev/blog/{slug}/")
+        elif not is_published and not path_already_exists:
+            draft_urls.append(f"https://adityais.dev/draft/blog/{slug}/")
 
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, "w") as f:
@@ -85,7 +91,10 @@ while True:
             ]
 
             if article['cover_image'] is not None:
-                            frontmatter_lines.append(f'    coverImage: {article["cover_image"]}')
+                frontmatter_lines.append(f'    coverImage: {article["cover_image"]}')
+
+            if not is_published:
+               frontmatter_lines.append("isDraft: true")
 
             frontmatter_lines.append("---")
             frontmatter = "\n".join(frontmatter_lines)
@@ -95,3 +104,6 @@ while True:
         print(f"Generated: {file_path}")
 
     page_number += 1
+
+with open("./draft-urls.json", "w") as f:
+    json.dump(draft_urls, f)

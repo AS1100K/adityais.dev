@@ -53,6 +53,8 @@ jobs:
           path: |
             prs.json
             repo-info.json
+            draft-urls.json
+            src/content/
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
