@@ -18,152 +18,49 @@
 </div>
 
 <script is:inline>
-  // Script to detect consecutive images and convert them to carousels
+  // Initialize carousel functionality for statically generated carousels
   document.addEventListener("DOMContentLoaded", function () {
-    const proseContainer = document.querySelector(".prose-content");
-    if (!proseContainer) return;
+    const carousels = document.querySelectorAll(".image-carousel");
 
-    // Find all direct children of prose container
-    const children = Array.from(proseContainer.children);
-    const imageGroups = [];
-    let currentGroup = [];
-
-    // Group consecutive images
-    children.forEach((child, index) => {
-      if (
-        child.tagName === "P" &&
-        child.children.length === 1 &&
-        child.children[0].tagName === "IMG"
-      ) {
-        // This is a paragraph containing only an image
-        currentGroup.push({
-          element: child,
-          img: child.children[0],
-          index: index,
-        });
-      } else if (currentGroup.length > 0) {
-        // End of consecutive images
-        if (currentGroup.length > 1) {
-          imageGroups.push([...currentGroup]);
-        }
-        currentGroup = [];
-      }
-    });
-
-    // Handle last group
-    if (currentGroup.length > 1) {
-      imageGroups.push(currentGroup);
-    }
-
-    // Convert each group to a carousel
-    imageGroups.forEach((group) => {
-      createCarousel(group, proseContainer);
+    carousels.forEach((carousel) => {
+      initializeCarousel(carousel);
     });
   });
 
-  function createCarousel(imageGroup, container) {
-    // Create carousel structure
-    const carousel = document.createElement("div");
-    carousel.className = "image-carousel not-prose my-6";
-
-    const carouselContainer = document.createElement("div");
-    carouselContainer.className = "carousel-container relative";
-
-    const track = document.createElement("div");
-    track.className =
-      "carousel-track flex transition-transform duration-300 ease-in-out overflow-hidden";
-
-    // Add images to carousel
-    imageGroup.forEach(({ img }) => {
-      const slide = document.createElement("div");
-      slide.className = "carousel-slide min-w-full flex-shrink-0";
-
-      const clonedImg = img.cloneNode(true);
-      clonedImg.className =
-        "w-full h-auto object-contain max-h-[70vh] mx-auto block rounded-lg shadow-lg";
-      clonedImg.style.margin = "0 auto";
-
-      slide.appendChild(clonedImg);
-      track.appendChild(slide);
-    });
-
-    // Create navigation buttons
-    const prevBtn = document.createElement("button");
-    prevBtn.className =
-      "carousel-prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition-opacity z-10";
-    prevBtn.setAttribute("aria-label", "Previous image");
-    prevBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>`;
-
-    const nextBtn = document.createElement("button");
-    nextBtn.className =
-      "carousel-next absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition-opacity z-10";
-    nextBtn.setAttribute("aria-label", "Next image");
-    nextBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
-
-    // Create indicators
-    const indicatorsContainer = document.createElement("div");
-    indicatorsContainer.className =
-      "carousel-indicators flex justify-center mt-4 space-x-2";
-
-    imageGroup.forEach((_, index) => {
-      const indicator = document.createElement("div");
-      indicator.className =
-        "carousel-indicator w-2 h-2 rounded-full bg-gray-300 cursor-pointer transition-colors hover:bg-secondary";
-      if (index === 0) indicator.classList.add("active", "bg-primary");
-      indicatorsContainer.appendChild(indicator);
-    });
-
-    // Create caption
-    const captionContainer = document.createElement("div");
-    captionContainer.className = "carousel-caption text-center mt-2";
-    const captionText = document.createElement("p");
-    captionText.className = "text-xs text-gray-600 caption-text";
-    captionContainer.appendChild(captionText);
-
-    // Assemble carousel
-    carouselContainer.appendChild(track);
-    carouselContainer.appendChild(prevBtn);
-    carouselContainer.appendChild(nextBtn);
-    carousel.appendChild(carouselContainer);
-    carousel.appendChild(indicatorsContainer);
-    carousel.appendChild(captionContainer);
-
-    // Insert carousel and remove original images
-    const firstImage = imageGroup[0];
-    container.insertBefore(carousel, firstImage.element);
-
-    // Remove original image paragraphs
-    imageGroup.forEach(({ element }) => {
-      element.remove();
-    });
-
-    // Initialize carousel functionality
-    initializeCarousel(carousel, imageGroup);
-  }
-
-  function initializeCarousel(carousel, imageGroup) {
+  function initializeCarousel(carousel) {
     const track = carousel.querySelector(".carousel-track");
     const prevBtn = carousel.querySelector(".carousel-prev");
     const nextBtn = carousel.querySelector(".carousel-next");
     const indicatorsContainer = carousel.querySelector(".carousel-indicators");
     const captionElement = carousel.querySelector(".caption-text");
+    const dataScript = carousel.querySelector(".carousel-data");
 
     if (
       !track ||
       !prevBtn ||
       !nextBtn ||
       !indicatorsContainer ||
-      !captionElement
-    )
+      !captionElement ||
+      !dataScript
+    ) {
       return;
+    }
+
+    // Parse image data from the embedded script
+    let imageData = [];
+    try {
+      imageData = JSON.parse(dataScript.textContent);
+    } catch (e) {
+      console.error("Failed to parse carousel data:", e);
+      return;
+    }
 
     const slides = Array.from(track.children);
     const totalSlides = slides.length;
     let currentIndex = 0;
 
     function updateCaption() {
-      const currentImg = imageGroup[currentIndex].img;
-      const caption = currentImg?.alt || "";
+      const caption = imageData[currentIndex]?.alt || "";
       captionElement.textContent = caption;
       captionElement.style.display = caption ? "block" : "none";
     }
