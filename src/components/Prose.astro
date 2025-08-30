@@ -3,7 +3,7 @@
 ---
 
 <div
-  class="m-auto mb-10 prose
+  class="m-auto mb-10 prose prose-content
   prose-h1:text-4xl prose-h1:font-black prose-h1:text-primary
   prose-h2:text-3xl prose-h2:font-extrabold prose-h2:text-primary
   prose-h3:text-2xl prose-h3:font-bold prose-h3:text-secondary
@@ -16,3 +16,140 @@
 >
   <slot />
 </div>
+
+<script is:inline>
+  // Initialize carousel functionality for statically generated carousels
+  document.addEventListener("DOMContentLoaded", function () {
+    const carousels = document.querySelectorAll(".image-carousel");
+
+    carousels.forEach((carousel) => {
+      initializeCarousel(carousel);
+    });
+  });
+
+  function initializeCarousel(carousel) {
+    const track = carousel.querySelector(".carousel-track");
+    const prevBtn = carousel.querySelector(".carousel-prev");
+    const nextBtn = carousel.querySelector(".carousel-next");
+    const indicatorsContainer = carousel.querySelector(".carousel-indicators");
+    const captionElement = carousel.querySelector(".caption-text");
+    const dataScript = carousel.querySelector(".carousel-data");
+
+    if (
+      !track ||
+      !prevBtn ||
+      !nextBtn ||
+      !indicatorsContainer ||
+      !captionElement ||
+      !dataScript
+    ) {
+      return;
+    }
+
+    // Parse image data from the embedded script
+    let imageData = [];
+    try {
+      imageData = JSON.parse(dataScript.textContent);
+    } catch (e) {
+      console.error("Failed to parse carousel data:", e);
+      return;
+    }
+
+    const slides = Array.from(track.children);
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+
+    function updateCaption() {
+      const caption = imageData[currentIndex]?.alt || "";
+      captionElement.textContent = caption;
+      captionElement.style.display = caption ? "block" : "none";
+    }
+
+    function updateIndicators() {
+      const indicators = indicatorsContainer.querySelectorAll(
+        ".carousel-indicator",
+      );
+      indicators.forEach((indicator, index) => {
+        if (index === currentIndex) {
+          indicator.classList.add("active", "bg-primary");
+          indicator.classList.remove("bg-gray-300");
+        } else {
+          indicator.classList.remove("active", "bg-primary");
+          indicator.classList.add("bg-gray-300");
+        }
+      });
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      const translateX = -index * 100;
+      track.style.transform = `translateX(${translateX}%)`;
+      updateIndicators();
+      updateCaption();
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      goToSlide(currentIndex);
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      goToSlide(currentIndex);
+    }
+
+    // Event listeners
+    nextBtn.addEventListener("click", nextSlide);
+    prevBtn.addEventListener("click", prevSlide);
+
+    // Indicator clicks
+    const indicators = indicatorsContainer.querySelectorAll(
+      ".carousel-indicator",
+    );
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener("click", () => goToSlide(index));
+    });
+
+    // Keyboard navigation
+    carousel.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        nextSlide();
+      }
+    });
+
+    // Touch/swipe support for mobile
+    let startX = 0;
+    let isDragging = false;
+
+    track.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    });
+
+    track.addEventListener("touchend", (e) => {
+      if (!isDragging) return;
+
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+
+      if (Math.abs(diff) > 50) {
+        // Minimum swipe distance
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+
+      isDragging = false;
+    });
+
+    // Initialize
+    updateCaption();
+    updateIndicators();
+  }
+</script>

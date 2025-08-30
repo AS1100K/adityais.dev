@@ -83,8 +83,10 @@ const { frontmatter } = Astro.props;
                 height={274}
               />
             ) : (
-              <br class="md:hidden" />
-              <br class="md:hidden" />
+              <>
+                <br class="md:hidden" />
+                <br class="md:hidden" />
+              </>
             )}
 
             <h1>{frontmatter.title}</h1>
