@@ -5,10 +5,13 @@ import fs from "fs";
 
 const draftUrls = JSON.parse(fs.readFileSync("draft-urls.json", "utf-8"));
 
+import { remarkCarousel } from "./src/plugins/remark-carousel.mjs";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://adityais.dev",
   markdown: {
+    remarkPlugins: [remarkCarousel],
     shikiConfig: {
       // Choose from Shiki's built-in themes (or add your own)
       // https://shiki.style/themes
