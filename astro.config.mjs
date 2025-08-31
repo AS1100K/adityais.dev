@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import fs from "fs";
+import rehypeFigure from "@microflash/rehype-figure";
 
 const draftUrls = JSON.parse(fs.readFileSync("draft-urls.json", "utf-8"));
 
@@ -9,6 +10,7 @@ const draftUrls = JSON.parse(fs.readFileSync("draft-urls.json", "utf-8"));
 export default defineConfig({
   site: "https://adityais.dev",
   markdown: {
+    rehypePlugins: [rehypeFigure],
     shikiConfig: {
       // Choose from Shiki's built-in themes (or add your own)
       // https://shiki.style/themes

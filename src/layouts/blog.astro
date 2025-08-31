@@ -65,7 +65,7 @@ const { frontmatter } = Astro.props;
   }
 
   <article>
-    <Prose>
+      <Prose imageAsFigure={frontmatter.v1Data != null}>
       <!-- For newer blogs that doesn't include title in markdown content -->
       {
         frontmatter.v1Data && (

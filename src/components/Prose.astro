@@ -1,18 +1,33 @@
 ---
+interface Props {
+  imageAsFigure?: boolean;
+}
 
+const props = Astro.props;
 ---
 
 <div
-  class="m-auto mb-10 prose
-  prose-h1:text-4xl prose-h1:font-black prose-h1:text-primary
-  prose-h2:text-3xl prose-h2:font-extrabold prose-h2:text-primary
-  prose-h3:text-2xl prose-h3:font-bold prose-h3:text-secondary
-  prose-table:text-base prose-thead:uppercase
-  prose-th:px-6 prose-th:py-3
-  prose-tr:border-b
-  prose-td:px-6 prose-td:py-4
-  prose-table:text-text
-  prose-img:rounded-lg prose-img:shadow-lg prose-img:my-6"
+  class:list={[
+    "m-auto mb-10 prose",
+    // Headings
+    "prose-h1:text-4xl prose-h1:font-black prose-h1:text-primary",
+    "prose-h2:text-3xl prose-h2:font-extrabold prose-h2:text-primary",
+    "prose-h3:text-2xl prose-h3:font-bold prose-h3:text-secondary",
+    // Tables
+    "prose-table:text-base prose-table:text-text",
+    "prose-thead:uppercase",
+    "prose-th:px-6 prose-th:py-3",
+    "prose-tr:border-b",
+    "prose-td:px-6 prose-td:py-4",
+    // Images & Figures
+    "prose-img:rounded-lg prose-img:shadow-lg",
+    ...(props.imageAsFigure
+      ? [
+          "prose-figure:my-6 prose-figure:relative",
+          "prose-figcaption:absolute prose-figcaption:bottom-0 prose-figcaption:bg-background prose-figcaption:p-1 prose-figcaption:rounded-sm prose-figcaption:text-xs",
+        ]
+      : ["prose-img:my-6 prose-figcaption:hidden"]),
+  ]}
 >
   <slot />
 </div>
