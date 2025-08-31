@@ -31,11 +31,14 @@ blogs = blogs.sort(
   {
     blogs.length > 0 ? (
       <ul class="list-none">
-        {blogs.map((blog) => (
-          <li class="mb-4">
-            <a href={`/blog/${blog.id}`}>{blog.data.title}</a>
-          </li>
-        ))}
+        {blogs.map(
+          (blog) =>
+            !blog.data.isDraft && (
+              <li class="mb-4">
+                <a href={`/blog/${blog.id}`}>{blog.data.title}</a>
+              </li>
+            ),
+        )}
       </ul>
     ) : (
       <p>No blogs found.</p>
