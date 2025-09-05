@@ -6,12 +6,17 @@ export interface Props {
 }
 
 const props = Astro.props;
+
+// Add utm_source to devtoUrl if it exists
+const devtoUrlWithUtm = props.devtoUrl
+  ? `${props.devtoUrl}${props.devtoUrl.includes("?") ? "&" : "?"}utm_source=adityais.dev`
+  : undefined;
 ---
 
 <div
   class={`flex justify-start items-center gap-5 ${props.devtoUrl ? "rounded-br-lg md:flex-col gap-2 bg-background p-3 pb-1 md:pt-0" : "justify-start items-center gap-5"}`}
 >
-  <a href="https://github.com/as1100k"
+  <a href="https://github.com/as1100k?utm_source=adityais.dev"
     ><button
       ><Image
         src="/assets/icons/github.svg"
@@ -21,7 +26,7 @@ const props = Astro.props;
       /></button
     ></a
   >
-  <a href="https://linkedin.com/in/as1100k"
+  <a href="https://linkedin.com/in/as1100k?utm_source=adityais.dev"
     ><button
       ><Image
         src="/assets/icons/linkedin.svg"
@@ -48,7 +53,7 @@ const props = Astro.props;
       /></button
     ></a
   > -->
-  <a href="https://bsky.app/profile/adityais.dev"
+  <a href="https://bsky.app/profile/adityais.dev?utm_source=adityais.dev"
     ><button
       ><Image
         src="/assets/icons/bluesky.svg"
@@ -60,7 +65,7 @@ const props = Astro.props;
   >
   {
     props.devtoUrl && (
-      <a href={props.devtoUrl} target="_blank" referrerpolicy="no-referrer">
+      <a href={devtoUrlWithUtm} target="_blank" referrerpolicy="no-referrer">
         <button>
           <Image
             src="/assets/icons/dev-to.svg"

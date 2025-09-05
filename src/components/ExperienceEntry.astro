@@ -13,6 +13,11 @@ interface Props {
 }
 
 const props = Astro.props;
+
+// Add utm_source to company_url if it exists
+const companyUrlWithUtm = props.company_url
+  ? `${props.company_url}${props.company_url.includes("?") ? "&" : "?"}utm_source=adityais.dev`
+  : undefined;
 ---
 
 <div class="relative flex gap-6 pb-16">
@@ -85,7 +90,7 @@ const props = Astro.props;
               />
             </svg>
             <a
-              href={props.company_url}
+              href={companyUrlWithUtm}
               class="text-primary hover:text-accent transition-colors text-sm font-medium"
               target="_blank"
               rel="noopener noreferrer"
