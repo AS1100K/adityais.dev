@@ -90,7 +90,9 @@ const props = Astro.props;
               target="_blank"
               rel="noopener noreferrer"
             >
-              {props.company_url.replace(/^https?:\/\//, "")}
+              {props.company_url?.startsWith("/blog/")
+                ? "Read More"
+                : props.company_url.replace(/^https?:\/\//, "")}
             </a>
           </div>
         )

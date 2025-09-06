@@ -22,6 +22,7 @@ npm install  # Takes ~48 seconds. NEVER CANCEL. Set timeout to 90+ seconds.
 # Create dummy JSON files if you don't have GitHub API access:
 echo "[]" > prs.json
 echo "{}" > repo-info.json
+echo "[]" > draft-urls.json
 
 # Build the application
 npm run build  # Takes ~9-10 seconds. NEVER CANCEL. Set timeout to 30+ seconds.
