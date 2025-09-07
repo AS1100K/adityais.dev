@@ -24,6 +24,15 @@ interface Props {
 
 const props = Astro.props;
 
+// Add utm_source to URLs
+const externalUrlWithUtm = props.external_url
+  ? `${props.external_url}${props.external_url.includes("?") ? "&" : "?"}utm_source=adityais.dev`
+  : undefined;
+
+const githubUrlWithUtm = props.github_url
+  ? `https://github.com/${props.github_url}?utm_source=adityais.dev`
+  : undefined;
+
 if (!props.stars && props.github_url) {
   try {
     const { GITHUB_API_KEY } = import.meta.env;
@@ -123,7 +132,7 @@ Astro.response.headers.set(
     <div class="flex justify-center items-center gap-2">
       {
         props.external_url && (
-          <a href={props.external_url}>
+          <a href={externalUrlWithUtm}>
             <Image
               src="/assets/icons/link-external.svg"
               width={24}
@@ -135,7 +144,7 @@ Astro.response.headers.set(
       }
       {
         props.github_url && (
-          <a class="flex justify-center items-center" href={props.github_url}>
+          <a class="flex justify-center items-center" href={githubUrlWithUtm}>
             <Image
               src="/assets/icons/github.svg"
               width={24}
